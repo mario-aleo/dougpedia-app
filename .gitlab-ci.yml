@@ -16,13 +16,13 @@ stages:
 lint:
   stage: lint
   script:
-   - xvfb-run polymer lint --module-resolution=node --npm
+   - xvfb-run polymer lint
   tags:
     - docker
 
 test:
   stage: test
   script:
-   - xvfb-run polymer test --module-resolution=node --npm
+   - xvfb-run polymer test
   tags:
     - docker
