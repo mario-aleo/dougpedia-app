@@ -3,7 +3,6 @@ image: printminion/polymer-tester
 before_script:
   - echo -e "machine gitlab.com\nlogin gitlab-ci-token\npassword ${CI_JOB_TOKEN}" > ~/.netrc
   - export PATH=$PWD/node_modules/.bin:$PATH
-  - npm i -g npm
   - npm install
 
 cache:
@@ -24,6 +23,6 @@ stages:
 test:
   stage: test
   script:
-   - xvfb-run npm run test
+   - xvfb-run polymer test
   tags:
     - docker
