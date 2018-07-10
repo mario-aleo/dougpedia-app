@@ -10,15 +10,15 @@ cache:
   - node_modules/
 
 stages:
-  - lint
+  # - lint
   - test
 
-lint:
-  stage: lint
-  script:
-   - xvfb-run polymer lint
-  tags:
-    - docker
+# lint:
+#   stage: lint
+#   script:
+#    - xvfb-run polymer lint
+#   tags:
+#     - docker
 
 test:
   stage: test
