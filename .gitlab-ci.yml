@@ -1,0 +1,28 @@
+image: printminion/polymer-tester
+
+before_script:
+  - echo -e "machine gitlab.com\nlogin gitlab-ci-token\npassword ${CI_JOB_TOKEN}" > ~/.netrc
+  - export PATH=$PWD/node_modules/.bin:$PATH
+  - npm install
+
+cache:
+  paths:
+  - node_modules/
+
+stages:
+  - lint
+  - test
+
+lint:
+  stage: lint
+  script:
+   - xvfb-run polymer lint
+  tags:
+    - docker
+
+test:
+  stage: test
+  script:
+   - xvfb-run polymer test
+  tags:
+    - docker
