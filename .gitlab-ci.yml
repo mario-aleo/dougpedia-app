@@ -3,6 +3,7 @@ image: printminion/polymer-tester
 before_script:
   - echo -e "machine gitlab.com\nlogin gitlab-ci-token\npassword ${CI_JOB_TOKEN}" > ~/.netrc
   - export PATH=$PWD/node_modules/.bin:$PATH
+  - npm i -g polymer-cli
   - npm install
 
 cache:
