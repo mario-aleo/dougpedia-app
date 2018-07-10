@@ -1,6 +1,13 @@
 {
   "name": "dougpedia-app",
   "description": "Dougpedia App",
+  "scripts": {
+    "start": "polymer serve --entrypoint index.html",
+    "build": "polymer build --preset es6-bundled --js-transform-modules-to-amd",
+    "serve": "polymer serve build/es6-bundled",
+    "test": "npm run test:unit",
+    "test:unit": "polymer test --module-resolution=node --npm"
+  },
   "dependencies": {
     "@polymer/polymer": "^3.0.0"
   },
