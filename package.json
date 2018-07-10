@@ -14,5 +14,11 @@
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "^2.0.0",
     "wct-browser-legacy": "^1.0.0"
-  }
+  },
+  "version": "0.0.1",
+  "main": "index.html",
+  "repository": "https://gitlab.com/dougpedia/dougpedia-app.git",
+  "author": "Mario Aleo <marioaleo@msn.com>",
+  "license": "MIT",
+  "private": true
 }
