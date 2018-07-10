@@ -4,6 +4,7 @@ before_script:
   - echo -e "machine gitlab.com\nlogin gitlab-ci-token\npassword ${CI_JOB_TOKEN}" > ~/.netrc
   - export PATH=$PWD/node_modules/.bin:$PATH
   - npm i -g polymer-cli
+  - npm i -g yarn
   - npm install
 
 cache:
@@ -24,6 +25,6 @@ stages:
 test:
   stage: test
   script:
-   - xvfb-run polymer test
+   - xvfb-run yarn test
   tags:
     - docker
