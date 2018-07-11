@@ -16,7 +16,7 @@ stages:
 lint:
   stage: lint
   script:
-   - xvfb-run polymer lint
+   - xvfb-run polymer lint test/dougpedia-app/
   tags:
     - docker
 
