@@ -5,7 +5,7 @@ before_script:
   - echo -e "machine gitlab.com\nlogin gitlab-ci-token\npassword ${CI_JOB_TOKEN}" > ~/.netrc
   # Update apt-get Sources
   - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
-  - wget -q -O – http://mozilla.debian.net/archive.asc | apt-key add – && echo “deb http://mozilla.debian.net/ jessie-backports firefox-release” >> /etc/apt/sources.list.d/mozilla-firefox.list
+  - wget -q -O – http://mozilla.debian.net/archive.asc | apt-key add – && echo "deb http://mozilla.debian.net/ jessie-backports firefox-release" >> /etc/apt/sources.list.d/mozilla-firefox.list
   - echo "deb http://http.debian.net/debian jessie-backports main" | tee --append /etc/apt/sources.list.d/jessie-backports.list > /dev/null
   - apt-get update && apt-get upgrade -qq -y
   # Install Chrome
