@@ -2,6 +2,8 @@ image: mist/polymer-cli
 
 before_script:
   - echo -e "machine gitlab.com\nlogin gitlab-ci-token\npassword ${CI_JOB_TOKEN}" > ~/.netrc
+  - npm install -g npm
+  - npm install -g polmer-cli
   - npm install
 
 stages:
@@ -11,13 +13,13 @@ stages:
 lint:
   stage: lint
   script:
-    - polymer lint
+    - polymer lint --module-resolution=node --npm
   tags:
     - docker
 
 test:
   stage: test
   script:
-    - polymer test
+    - polymer test --module-resolution=node --npm
   tags:
     - docker
