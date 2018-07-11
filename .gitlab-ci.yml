@@ -5,6 +5,7 @@ before_script:
   - npm install -g npm
   - npm install -g polymer-cli
   - export PATH=$PWD/node_modules/.bin:$PATH
+  - npm install
 
 cache:
   paths:
@@ -17,15 +18,13 @@ stages:
 lint:
   stage: lint
   script:
-   - npm install
-   - xvfb-run polymer lint
+    - xvfb-run polymer lint
   tags:
     - docker
 
 test:
   stage: test
   script:
-   - npm install
-   - xvfb-run polymer test
+    - xvfb-run polymer test
   tags:
     - docker
