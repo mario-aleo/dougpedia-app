@@ -6,9 +6,9 @@ before_script:
   # Install Chrome
   - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list && apt-get update -yqqq && apt-get install google-chrome-stable -qq -y && mv /usr/bin/google-chrome /usr/bin/google-chrome-orig  && echo '#!/bin/bash' > /usr/bin/google-chrome && echo '/usr/bin/google-chrome-orig --no-sandbox --disable-setuid-sandbox --allow-sandbox-debugging "$@"' >> /usr/bin/google-chrome && chmod +x /usr/bin/google-chrome
   # Install Firefox
-  - apt-get remove iceweasel
-  - echo "deb http://packages.linuxmint.com debian import" | tee //etc/apt/sources.list
-  - apt-get update -yqqq && apt-get install firefox -qq -y && apt-get install firefox-l10n-en-us -qq -y
+  # - apt-get remove iceweasel
+  # - echo "deb http://packages.linuxmint.com debian import" | tee //etc/apt/sources.list
+  # - apt-get update -yqqq && apt-get install firefox -qq -y && apt-get install firefox-l10n-en-us -qq -y
   # Install Java
   # - echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee /etc/apt/sources.list.d/webupd8team-java.list && echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886 && apt-get -qq update && echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections && apt-get install -y -qq oracle-java8-installer && apt-get install -y -qq oracle-java8-set-default
   - echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee //etc/apt/sources.list.d/java-8-debian.list
