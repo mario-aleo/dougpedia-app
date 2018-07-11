@@ -6,7 +6,7 @@ before_script:
   # Update apt-get Sources
   - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
   - echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee //etc/apt/sources.list.d/java-8-debian.list && echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee //etc/apt/sources.list.d/java-8-debian.list && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
-  - apt-get update && apt-get upgrade
+  - apt-get update && apt-get upgrade -qq -y
   # Install Firefox
   # - apt-get install firefox -qq -y && apt-get install firefox-l10n-en-us -qq -y
   # Install Chrome
