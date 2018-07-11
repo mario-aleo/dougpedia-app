@@ -4,16 +4,16 @@ before_script:
   # Gitlab Token
   - echo -e "machine gitlab.com\nlogin gitlab-ci-token\npassword ${CI_JOB_TOKEN}" > ~/.netrc
   # Update apt-get Sources
+  - apt-get update -qqqy
   - apt-get remove iceweasel
   - echo "deb http://packages.linuxmint.com debian import" | tee //etc/apt/sources.list
   - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
-  - echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee //etc/apt/sources.list.d/java-8-debian.list && echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee //etc/apt/sources.list.d/java-8-debian.list
-  - apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
+  - echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee //etc/apt/sources.list.d/java-8-debian.list && echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee //etc/apt/sources.list.d/java-8-debian.list && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
   - apt-get update
-  # Install Chrome
-  - apt-get install google-chrome-stable -qq -y && mv /usr/bin/google-chrome /usr/bin/google-chrome-orig && echo '#!/bin/bash' > /usr/bin/google-chrome && echo '/usr/bin/google-chrome-orig --no-sandbox --disable-setuid-sandbox --allow-sandbox-debugging "$@"' >> /usr/bin/google-chrome && chmod +x /usr/bin/google-chrome
   # Install Firefox
   - apt-get install firefox -qq -y && apt-get install firefox-l10n-en-us -qq -y
+  # Install Chrome
+  - apt-get install google-chrome-stable -qq -y && mv /usr/bin/google-chrome /usr/bin/google-chrome-orig && echo '#!/bin/bash' > /usr/bin/google-chrome && echo '/usr/bin/google-chrome-orig --no-sandbox --disable-setuid-sandbox --allow-sandbox-debugging "$@"' >> /usr/bin/google-chrome && chmod +x /usr/bin/google-chrome
   # Install Java
   - apt-get install default-jre -qq -y && apt-get install oracle-java8-installer -qq -y && apt-get install oracle-java8-set-default -qq -y
   # Install Xvfb (graphic display)
