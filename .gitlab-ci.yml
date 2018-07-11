@@ -3,6 +3,7 @@ image: mist/polymer-cli
 before_script:
   - echo -e "machine gitlab.com\nlogin gitlab-ci-token\npassword ${CI_JOB_TOKEN}" > ~/.netrc
   - npm install -g npm
+  - npm install -g isarray
   - npm install -g polmer-cli
   - npm install
 
