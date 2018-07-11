@@ -11,7 +11,7 @@ before_script:
   # Install Chrome
   - apt-get install google-chrome-stable -qq -y && mv /usr/bin/google-chrome /usr/bin/google-chrome-orig && echo '#!/bin/bash' > /usr/bin/google-chrome && echo '/usr/bin/google-chrome-orig --no-sandbox --disable-setuid-sandbox --allow-sandbox-debugging "$@"' >> /usr/bin/google-chrome && chmod +x /usr/bin/google-chrome
   # Install Firefox
-  - apt-get install firefox -qq -y
+  - apt-get install -t jessie-backports firefox-release -qq -y
   # Install Java
   - apt-get install -t jessie-backports openjdk-8-jdk -qq -y
   - java -version
