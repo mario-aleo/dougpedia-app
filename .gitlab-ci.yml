@@ -12,9 +12,11 @@ before_script:
   # Install Xvfb
   - apt-get install -qq -y xvfb
   # Prepare to execute stages
-  - sudo npm install -g npm
-  - sudo npm install -g yarn
-  - sudo npm install -g polymer-cli
+  - npm config set user 0
+  - npm config set unsafe-perm true
+  - npm install -g npm
+  - npm install -g yarn
+  - npm install -g polymer-cli
 
 stages:
   - lint
