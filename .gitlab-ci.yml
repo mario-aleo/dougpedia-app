@@ -2,6 +2,7 @@ image: mist/polymer-cli
 
 before_script:
   - echo -e "machine gitlab.com\nlogin gitlab-ci-token\npassword ${CI_JOB_TOKEN}" > ~/.netrc
+  - npm install polymer-cli
   - npm install
 
 stages:
