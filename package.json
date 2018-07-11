@@ -9,6 +9,7 @@
     "test:unit": "polymer test --module-resolution=node --npm"
   },
   "dependencies": {
+    "@polymer/lit-element": "^0.5.2",
     "@polymer/polymer": "^3.0.0"
   },
   "devDependencies": {
