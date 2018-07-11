@@ -1,6 +1,7 @@
 image: node:latest
 
 before_script:
+  # Gitlab Token
   - echo -e "machine gitlab.com\nlogin gitlab-ci-token\npassword ${CI_JOB_TOKEN}" > ~/.netrc
   # Install Chrome
   - set -xe && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list && apt-get update -yqqq && apt-get install -qq -y google-chrome-stable
@@ -11,9 +12,11 @@ before_script:
   - echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee /etc/apt/sources.list.d/webupd8team-java.list && echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886 && apt-get -qq update && echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections && apt-get install -y -qq oracle-java8-installer && apt-get install -y -qq oracle-java8-set-default
   # Install Xvfb
   - apt-get install -qq -y xvfb
-  # Prepare to execute stages
+  - Xvfb :0 -ac +extension RANDR -screen 0 1366x768x24 &
+  # Ignore root permission
   - npm config set user 0
   - npm config set unsafe-perm true
+  # Prepare to execute stages
   - npm install -g npm
   - npm install -g yarn
   - npm install -g polymer-cli
@@ -26,7 +29,7 @@ lint:
   stage: lint
   script:
     - npm install
-    - xvfb polymer lint --module-resolution=node --npm
+    - xvfb-run polymer lint --module-resolution=node --npm
   tags:
     - docker
 
@@ -34,6 +37,6 @@ test:
   stage: test
   script:
     - npm install
-    - xvfb polymer test --module-resolution=node --npm
+    - xvfb-run polymer test --module-resolution=node --npm
   tags:
     - docker
