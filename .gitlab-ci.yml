@@ -4,11 +4,6 @@ stages:
   - lint
   - test
 
-test_job:
-  stage: test
-  script:
-  - polymer test
-
 lint:
   stage: lint
   script:
