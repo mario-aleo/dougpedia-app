@@ -11,7 +11,6 @@ before_script:
   - apt-get install google-chrome-stable -qq -y && mv /usr/bin/google-chrome /usr/bin/google-chrome-orig && echo '#!/bin/bash' > /usr/bin/google-chrome && echo '/usr/bin/google-chrome-orig --no-sandbox --disable-setuid-sandbox --allow-sandbox-debugging "$@"' >> /usr/bin/google-chrome && chmod +x /usr/bin/google-chrome
   # Install Java
   - apt-get install -t jessie-backports openjdk-8-jdk -qq -y
-  - java -version
   # Install Xvfb (graphic display)
   - apt-get install -qq -y xvfb && Xvfb :0 -ac +extension RANDR -screen 0 1366x768x24 &
   # Ignore root permission
