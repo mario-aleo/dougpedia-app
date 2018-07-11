@@ -5,6 +5,7 @@ before_script:
   - echo -e "machine gitlab.com\nlogin gitlab-ci-token\npassword ${CI_JOB_TOKEN}" > ~/.netrc
   # Update apt-get Sources
   - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+  - echo "deb http://http.debian.net/debian jessie-backports main" | tee --append /etc/apt/sources.list.d/jessie-backports.list > /dev/null
   # - echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee //etc/apt/sources.list.d/java-8-debian.list && echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee //etc/apt/sources.list.d/java-8-debian.list && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
   - apt-get update && apt-get upgrade -qq -y
   # Install Firefox
@@ -13,7 +14,7 @@ before_script:
   - apt-get install google-chrome-stable -qq -y && mv /usr/bin/google-chrome /usr/bin/google-chrome-orig && echo '#!/bin/bash' > /usr/bin/google-chrome && echo '/usr/bin/google-chrome-orig --no-sandbox --disable-setuid-sandbox --allow-sandbox-debugging "$@"' >> /usr/bin/google-chrome && chmod +x /usr/bin/google-chrome
   # Install Java
   # - apt-get install default-jre -qq -y && apt-get install oracle-java8-installer -qq -y && apt-get install oracle-java8-set-default -qq -y
-  - apt-get install openjdk-8-jre-headless
+  - apt-get install -t jessie-backports openjdk-8-jdk
   - java -version
   # Install Xvfb (graphic display)
   - apt-get install -qq -y xvfb && Xvfb :0 -ac +extension RANDR -screen 0 1366x768x24 &
