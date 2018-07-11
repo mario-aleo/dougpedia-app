@@ -13,7 +13,7 @@ before_script:
   - apt-get install google-chrome-stable -qq -y && mv /usr/bin/google-chrome /usr/bin/google-chrome-orig && echo '#!/bin/bash' > /usr/bin/google-chrome && echo '/usr/bin/google-chrome-orig --no-sandbox --disable-setuid-sandbox --allow-sandbox-debugging "$@"' >> /usr/bin/google-chrome && chmod +x /usr/bin/google-chrome
   # Install Java
   # - apt-get install default-jre -qq -y && apt-get install oracle-java8-installer -qq -y && apt-get install oracle-java8-set-default -qq -y
-  - apt-get install openjdk-8-jdk && apt-get install openjdk-8-jre
+  - apt-get install openjdk-8-jre-headless
   - java -version
   # Install Xvfb (graphic display)
   - apt-get install -qq -y xvfb && Xvfb :0 -ac +extension RANDR -screen 0 1366x768x24 &
