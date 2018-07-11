@@ -3,7 +3,6 @@ image: printminion/polymer-tester
 before_script:
   - echo -e "machine gitlab.com\nlogin gitlab-ci-token\npassword ${CI_JOB_TOKEN}" > ~/.netrc
   - npm install -g npm
-  - npm install -g yarn
   - npm install -g polymer-cli
   - export PATH=$PWD/node_modules/.bin:$PATH
 
@@ -18,7 +17,7 @@ stages:
 lint:
   stage: lint
   script:
-   - yarn
+   - npm install
    - xvfb-run polymer lint
   tags:
     - docker
@@ -26,7 +25,7 @@ lint:
 test:
   stage: test
   script:
-   - yarn
+   - npm install
    - xvfb-run polymer test
   tags:
     - docker
