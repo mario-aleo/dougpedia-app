@@ -1,6 +1,7 @@
 {
   "name": "dougpedia-app",
   "description": "Dougpedia App",
+  "main": "src/dougpedia-app/dougpedia-app.js",
   "scripts": {
     "start": "polymer serve --entrypoint index.html",
     "build": "polymer build --preset es6-bundled --js-transform-modules-to-amd",
@@ -17,7 +18,6 @@
     "wct-browser-legacy": "^1.0.0"
   },
   "version": "0.0.1",
-  "main": "index.html",
   "repository": "https://gitlab.com/dougpedia/dougpedia-app.git",
   "author": "Mario Aleo <marioaleo@msn.com>",
   "license": "MIT",
