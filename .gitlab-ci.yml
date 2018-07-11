@@ -14,6 +14,7 @@ stages:
 lint:
   stage: lint
   script:
+    - npm uninstall -g polymer-cli
     - npm install -g polymer-cli
     - export PATH=$PWD/node_modules/.bin:$PATH
     - npm install
@@ -24,6 +25,7 @@ lint:
 test:
   stage: test
   script:
+    - npm uninstall -g polymer-cli
     - npm install -g polymer-cli
     - export PATH=$PWD/node_modules/.bin:$PATH
     - npm install
