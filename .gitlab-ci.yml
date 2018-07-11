@@ -11,7 +11,7 @@ cache:
 
 stages:
   - lint
-  # - test
+  - test
 
 lint:
   stage: lint
@@ -20,9 +20,9 @@ lint:
   tags:
     - docker
 
-# test:
-#   stage: test
-#   script:
-#    - xvfb-run polymer test
-#   tags:
-#     - docker
+test:
+  stage: test
+  script:
+   - xvfb-run polymer test
+  tags:
+    - docker
