@@ -23,15 +23,15 @@ before_script:
   - yarn
 
 stages:
-  # - lint
+  - lint
   - test
 
-# lint:
-#   stage: lint
-#   script:
-#     - xvfb-run polymer lint --module-resolution=node --npm
-#   tags:
-#     - docker
+lint:
+  stage: lint
+  script:
+    - xvfb-run polymer lint --module-resolution=node --npm
+  tags:
+    - docker
 
 test:
   stage: test
