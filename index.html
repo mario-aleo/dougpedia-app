@@ -7,6 +7,26 @@
     <title>dougpedia-app</title>
     <meta name="description" content="Dougpedia App">
 
+    <style>
+      :root {
+        --mdc-theme-primary: hsl(0, 100%, 100%);
+      }
+      
+      body {
+        position: relative;
+        min-height: 100vh;
+        padding: 0;
+        margin: 0;
+      }
+
+      dougpedia-app[unresolved] {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+        background-color: hsl(0, 100%, 100%);
+      }
+    </style>
+
     <!-- See https://goo.gl/OOhYW5 -->
     <link rel="manifest" href="/manifest.json">
 
@@ -19,6 +39,6 @@
     <script type="module" src="/src/dougpedia-app/dougpedia-app.js"></script>
   </head>
   <body>
-    <dougpedia-app></dougpedia-app>
+    <dougpedia-app unresolved unauthorized></dougpedia-app>
   </body>
 </html>

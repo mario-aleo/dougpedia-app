@@ -10,6 +10,7 @@
     "test:unit": "polymer test --module-resolution=node --npm"
   },
   "dependencies": {
+    "@material/mwc-button": "^0.1.2",
     "@polymer/lit-element": "^0.5.2",
     "@polymer/polymer": "^3.0.0",
     "dougpedia-store": "https://gitlab.com/dougpedia/dougpedia-store.git",

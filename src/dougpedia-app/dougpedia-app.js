@@ -1,8 +1,9 @@
-import {html, LitElement} from '@polymer/lit-element';
-import {connect, installRouter} from 'pwa-helpers';
+import { html, LitElement } from '@polymer/lit-element';
+import { connect, installRouter } from 'pwa-helpers';
 import store from 'dougpedia-store/dougpedia-store';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import '@material/mwc-button';
 
 firebase.initializeApp({
   apiKey: "AIzaSyCsm-Pyr1cW-BOf8po98j0nEMH164X-8Z8",
@@ -19,15 +20,13 @@ firebase.initializeApp({
  */
 class DougpediaApp extends connect(store)(LitElement) {
   static get properties() {
-    return {
-      authorized: Boolean
-    };
+    return {};
   }
 
   constructor() {
     super();
 
-    this.authorized = false;
+    this.removeAttribute('unresolved');
 
     firebase.auth().onAuthStateChanged(this._onAuthChanged);
   }
@@ -36,36 +35,83 @@ class DougpediaApp extends connect(store)(LitElement) {
     return html`
       <style>
         :host {
-          display: block;
+          display: grid;
+          grid-template-rows: 64px auto;
+          grid-template-columns: 100vw;
+          grid-template-areas:
+            'appHeader'
+            'appContent';
+          min-height: 100vh;
         }
       </style>
 
-      ${this.authorized ? '' : this._loginFragment()}
+      ${this._headerFragment()}
+
+      ${this._loginFragment()}
+
+      ${this._contentFragment()}
+    `;
+  }
+
+  _headerFragment() {
+    return html`
+      <style>
+        #header {
+          grid-area: appHeader;
+        }
+      </style>
+
+      <section id="header"></section>
     `;
   }
 
   _loginFragment() {
     return html`
       <style>
+        :host([authorized]) #login {
+          opacity: 0;
+          visibility: hidden;
+        }
+
         #login {
+          position: absolute;
+          top: 64px;
+          left: 0;
           display: flex;
           align-items: center;
           justify-content: center;
           width: 100%;
-          height: 100%;
+          height: calc(100vh - 64px);
+          transition: opacity ease 0.25s, visibility ease 0.25s;
+          will-change: opacity, transition, visibility;
         }
       </style>
 
       <section id="login">
-        <button on-click="${e => this.signin()}">
-          Login
-        </button>
+        <mwc-button raised on-click="${e => this.signin()}">
+          Signin
+        </mwc-button>
       </section>
     `;
   }
 
+  _contentFragment() {
+    return html`
+      <style>
+        #content {
+          grid-area: appContent;
+        }
+      </style>
+
+      <section id="content"></section>
+    `;
+  }
+
   _stateChanged(state) {
-    this.authorized = !!state.session.id;
+    if (state.session.id && this.hasAttribute('unauthorized'))
+      this.removeAttribute('unauthorized');
+    else if (!state.session.id && !this.hasAttribute('unauthorized'))
+      this.setAttribute('unauthorized', '');
   }
 
   _onAuthChanged(user) {
@@ -79,7 +125,7 @@ class DougpediaApp extends connect(store)(LitElement) {
         }
       });
     else
-      store.dispatch({type: 'SIGNOUT'});
+      store.dispatch({ type: 'SIGNOUT' });
   }
 
   signin() {
