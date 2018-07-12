@@ -1,0 +1,41 @@
+image: node:latest
+
+before_script:
+  # Gitlab Token
+  - echo -e "machine gitlab.com\nlogin gitlab-ci-token\npassword ${CI_JOB_TOKEN}" > ~/.netrc
+  # Update apt-get Sources
+  - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+  - echo "deb http://http.debian.net/debian jessie-backports main" | tee --append /etc/apt/sources.list.d/jessie-backports.list > /dev/null
+  - apt-get update && apt-get upgrade -qq -y
+  # Install Chrome
+  - apt-get install google-chrome-stable -qq -y && mv /usr/bin/google-chrome /usr/bin/google-chrome-orig && echo '#!/bin/bash' > /usr/bin/google-chrome && echo '/usr/bin/google-chrome-orig --no-sandbox --disable-setuid-sandbox --allow-sandbox-debugging "$@"' >> /usr/bin/google-chrome && chmod +x /usr/bin/google-chrome
+  # Install Java
+  - apt-get install -t jessie-backports openjdk-8-jdk -qq -y
+  # Install Xvfb (graphic display)
+  - apt-get install -qq -y xvfb && Xvfb :0 -ac +extension RANDR -screen 0 1366x768x24 &
+  # Ignore root permission
+  - npm config set user 0 && npm config set unsafe-perm true
+  # Install Yarn
+  - npm install -g yarn
+  # Install Polymer CLI
+  - npm install -g polymer-cli
+  # Install Dependencies
+  - yarn
+
+stages:
+  - lint
+  - test
+
+lint:
+  stage: lint
+  script:
+    - xvfb-run polymer lint --module-resolution=node --npm
+  tags:
+    - docker
+
+test:
+  stage: test
+  script:
+    - xvfb-run polymer test --module-resolution=node --npm
+  tags:
+    - docker
