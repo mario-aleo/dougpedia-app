@@ -68,7 +68,7 @@ class DougpediaApp extends connect(store)(LitElement) {
   _loginFragment() {
     return html`
       <style>
-        :host([authorized]) #login {
+        :host(:not([unauthorized])) #login {
           opacity: 0;
           visibility: hidden;
         }
