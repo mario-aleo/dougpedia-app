@@ -3,18 +3,19 @@
   "description": "Dougpedia App",
   "main": "src/dougpedia-app/dougpedia-app.js",
   "scripts": {
-    "start": "polymer serve --entrypoint index.html",
+    "start": "polymer serve --module-resolution=node --npm --entrypoint index.html",
     "build": "polymer build --preset es6-bundled --js-transform-modules-to-amd",
     "serve": "polymer serve build/es6-bundled",
     "test": "npm run test:unit",
     "test:unit": "polymer test --module-resolution=node --npm"
   },
   "dependencies": {
+    "@firebase/webchannel-wrapper": "^0.2.8",
     "@material/mwc-button": "^0.1.2",
     "@polymer/lit-element": "^0.5.2",
     "@polymer/polymer": "^3.0.0",
     "dougpedia-store": "https://gitlab.com/dougpedia/dougpedia-store.git",
-    "firebase": "^5.2.0",
+    "firebase": "5.3.0",
     "pwa-helpers": "^0.8.3"
   },
   "devDependencies": {

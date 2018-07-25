@@ -29,12 +29,11 @@
     <script>
       window.process = { env: { NODE_ENV: 'production' } };
     </script>
-
-    <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-
-    <script type="module" src="/src/dougpedia-app/dougpedia-app.js"></script>
   </head>
   <body>
     <dougpedia-app unresolved unauthorized></dougpedia-app>
+
+    <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script type="module" src="/src/dougpedia-app/dougpedia-app.js"></script>
   </body>
 </html>

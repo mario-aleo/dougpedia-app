@@ -1,8 +1,9 @@
 import { html, LitElement } from '@polymer/lit-element';
 import { connect, installRouter } from 'pwa-helpers';
 import store from 'dougpedia-store/dougpedia-store';
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import "firebase/firebase-app";
+import "firebase/firebase-auth";
+import "firebase/firebase-firestore";
 import '@material/mwc-button';
 
 firebase.initializeApp({
@@ -13,6 +14,9 @@ firebase.initializeApp({
   storageBucket: "dougpedia-b2a43.appspot.com",
   messagingSenderId: "332394149499"
 });
+
+firebase.firestore()
+  .settings({timestampsInSnapshots: true});
 
 /**
  * @customElement
