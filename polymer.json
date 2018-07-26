@@ -1,9 +1,31 @@
 {
-  "npm": true,
+  "entrypoint": "index.html",
+  "shell": "src/dougpedia-app/dougpedia-app.js",
+  "sources": [
+    "src/dougpedia-app/dougpedia-app.js",
+    "package.json"
+  ],
+  "extraDependencies": [
+    "manifest.json",
+    "node_modules/@webcomponents/webcomponentsjs/**"
+  ],
   "moduleResolution": "node",
+  "npm": true,
   "lint": {
     "rules": [
       "polymer-3"
     ]
-  }
+  },
+  "builds": [ 
+    { 
+      "name": "es5prod",
+      "preset": "es5-bundled",
+      "addServiceWorker": true
+    },
+    { 
+      "name": "es6prod",
+      "preset": "es6-unbundled",
+      "addServiceWorker": true
+    }
+   ]
 }
