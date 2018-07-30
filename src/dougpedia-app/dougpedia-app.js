@@ -16,7 +16,7 @@ firebase.initializeApp({
 });
 
 firebase.firestore()
-  .settings({timestampsInSnapshots: true});
+  .settings({ timestampsInSnapshots: true });
 
 /**
  * @customElement
@@ -32,7 +32,10 @@ class DougpediaApp extends connect(store)(LitElement) {
 
     this.removeAttribute('unresolved');
 
-    firebase.auth().onAuthStateChanged(this._onAuthChanged);
+    firebase.auth()
+      .onAuthStateChanged(
+        this._onAuthChanged.bind(this)
+      );
   }
 
   _render() {
@@ -46,6 +49,7 @@ class DougpediaApp extends connect(store)(LitElement) {
             'appHeader'
             'appContent';
           min-height: 100vh;
+          background-image: linear-gradient(-210deg, #45D4FB 0%, #57E9F2 55%, #9EFBD3 100%)
         }
       </style>
 
@@ -92,7 +96,7 @@ class DougpediaApp extends connect(store)(LitElement) {
       </style>
 
       <section id="login">
-        <mwc-button raised on-click="${e => this.signin()}">
+        <mwc-button raised on-click="${this.signin}">
           Signin
         </mwc-button>
       </section>
@@ -112,14 +116,12 @@ class DougpediaApp extends connect(store)(LitElement) {
   }
 
   _stateChanged(state) {
-    if (state.session.id && this.hasAttribute('unauthorized'))
-      this.removeAttribute('unauthorized');
-    else if (!state.session.id && !this.hasAttribute('unauthorized'))
-      this.setAttribute('unauthorized', '');
+    this.jokeList = state.state.jokeList;
   }
 
   _onAuthChanged(user) {
-    if (user)
+    if (user) {
+      this.removeAttribute('unauthorized');
       store.dispatch({
         type: 'SIGNIN',
         data: {
@@ -128,8 +130,29 @@ class DougpediaApp extends connect(store)(LitElement) {
           name: user.displayName,
         }
       });
-    else
+      this._loadJokeList();
+    } else {
+      this.setAttribute('unauthorized', '');
       store.dispatch({ type: 'SIGNOUT' });
+    }
+  }
+
+  _loadJokeList() {
+    firebase.firestore()
+      .collection('jokes')
+      .get()
+      .then(res =>
+        store.dispatch({
+          type: 'UPDATE_JOKE_LIST',
+          data: {
+            jokeList: res.docs.map(doc =>
+              doc.data()
+            )
+          }
+        })
+      ).catch(err =>
+        console.error(err)
+      );
   }
 
   signin() {
