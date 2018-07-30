@@ -5,7 +5,7 @@
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#45D4FB",
-  "background_color": "#45D4FB",
+  "background_color": "#FFF",
   "icons": [
     {
       "src": "assets/icons/mipmap-mdpi/ic_launcher.png",

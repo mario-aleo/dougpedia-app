@@ -49,7 +49,7 @@ class DougpediaApp extends connect(store)(LitElement) {
             'appHeader'
             'appContent';
           min-height: 100vh;
-          background-image: linear-gradient(-210deg, #45D4FB 0%, #57E9F2 55%, #9EFBD3 100%)
+          background-image: linear-gradient(-210deg, #45D4FB 0%, #57E9F2 60%, #9EFBD3 100%)
         }
       </style>
 
