@@ -24,7 +24,7 @@
 
         test('Initializing app works', function() {
           var element = fixture('BasicTestFixture');
-          assert.equal(element.hasAtrribute('unauthorized'), true);
+          assert.equal(element.hasAttribute('unauthorized'), true);
           var elementShadowRoot = element.shadowRoot;
           var elementLogin = elementShadowRoot.querySelector('#login');
           assert.equal(elementLogin.computedStyleMap().get('opacity').value, 1);

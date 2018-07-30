@@ -6,7 +6,7 @@
     "start": "polymer serve --compile=always",
     "build": "polymer build",
     "test": "npm run test:unit",
-    "test:unit": "polymer test --compile=always --module-resolution=node --npm"
+    "test:unit": "polymer test --module-resolution=node --npm"
   },
   "dependencies": {
     "@firebase/webchannel-wrapper": "^0.2.8",
