@@ -94,7 +94,7 @@ class DougpediaApp extends connect(store)(LitElement) {
 
       <section id="login">
         <mwc-button raised on-click="${this.signin}">
-          Signin
+          Sign In
         </mwc-button>
       </section>
     `;
