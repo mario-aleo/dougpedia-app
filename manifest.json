@@ -1,7 +1,41 @@
 {
-  "name": "dougpedia-app",
-  "short_name": "dougpedia-app",
+  "name": "Dougpedia",
+  "short_name": "Dougpedia",
   "description": "Dougpedia App",
   "start_url": "/",
-  "display": "standalone"
+  "display": "standalone",
+  "theme_color": "#45D4FB",
+  "background_color": "#FFF",
+  "icons": [
+    {
+      "src": "assets/icons/mipmap-mdpi/ic_launcher.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "assets/icons/mipmap-hdpi/ic_launcher.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "assets/icons/mipmap-xhdpi/ic_launcher.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "assets/icons/mipmap-xxhdpi/ic_launcher.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "assets/icons/mipmap-xxxhdpi/ic_launcher.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/icons/icon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
 }

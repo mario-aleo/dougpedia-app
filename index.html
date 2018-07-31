@@ -3,18 +3,44 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+   
+    <title>Dougpedia</title>
+    <meta name="description" content="Dougpedia">
+    <meta name="theme-color" content="#45D4FB">
 
-    <title>dougpedia-app</title>
-    <meta name="description" content="Dougpedia App">
+    <style>
+      :root {
+        --mdc-theme-primary: #FFF;
+        --mdc-theme-on-primary: #555;
+      }
+
+      body {
+        position: relative;
+        min-height: 100vh;
+        padding: 0;
+        margin: 0;
+      }
+
+      dougpedia-app[unresolved] {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+        background-image: linear-gradient(-210deg, #45D4FB 0%, #57E9F2 60%, #9EFBD3 100%)
+      }
+    </style>
 
     <!-- See https://goo.gl/OOhYW5 -->
     <link rel="manifest" href="/manifest.json">
+    <link rel="shortcut icon" href="/assets/icons/icon.png"/>
 
-    <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-
-    <script type="module" src="/src/dougpedia-app/dougpedia-app.js"></script>
+    <script>
+      window.process = { env: { NODE_ENV: 'production' } };
+    </script>
   </head>
   <body>
-    <dougpedia-app></dougpedia-app>
+    <dougpedia-app unresolved unauthorized></dougpedia-app>
+    
+    <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script type="module" src="/src/dougpedia-app/dougpedia-app.js"></script>
   </body>
 </html>
