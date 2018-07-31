@@ -18,14 +18,16 @@
   },
   "builds": [ 
     { 
-      "name": "es5prod",
+      "name": "bundled",
       "preset": "es5-bundled",
-      "addServiceWorker": true
+      "addServiceWorker": true,
+      "addPushManifest": true
     },
     { 
-      "name": "es6prod",
+      "name": "unbundled",
       "preset": "es6-unbundled",
-      "addServiceWorker": true
+      "addServiceWorker": true,
+      "addPushManifest": true
     }
    ]
 }
