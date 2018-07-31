@@ -6,6 +6,17 @@
 
     <title>dougpedia-app test</title>
 
+    <style>
+      :root {
+        --mdc-theme-primary: #FFF;
+        --mdc-theme-on-primary: #555;
+      }
+    </style>
+
+    <script>
+      window.process = { env: { NODE_ENV: 'production' } };
+    </script>
+
     <script src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../../node_modules/wct-browser-legacy/browser.js"></script>
 
@@ -27,8 +38,9 @@
           assert.equal(element.hasAttribute('unauthorized'), true);
           var elementShadowRoot = element.shadowRoot;
           var elementLogin = elementShadowRoot.querySelector('#login');
-          assert.equal(elementLogin.computedStyleMap().get('opacity').value, 1);
-          assert.equal(elementLogin.computedStyleMap().get('visibility').value, 'visible');
+          var elementLoginStyle = window.getComputedStyle(elementLogin);
+          assert.equal(elementLoginStyle.opacity, 1);
+          assert.equal(elementLoginStyle.visibility, 'visible');
         });
       });
     </script>

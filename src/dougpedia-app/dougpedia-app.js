@@ -1,9 +1,9 @@
 import { html, LitElement } from '@polymer/lit-element';
 import { connect, installRouter } from 'pwa-helpers';
 import store from 'dougpedia-store/dougpedia-store';
-import 'firebase/firebase-app';
-import 'firebase/firebase-auth';
-import 'firebase/firebase-firestore';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 import '@material/mwc-button';
 
 firebase.initializeApp({
@@ -14,9 +14,6 @@ firebase.initializeApp({
   storageBucket: "dougpedia-b2a43.appspot.com",
   messagingSenderId: "332394149499"
 });
-
-firebase.firestore()
-  .settings({ timestampsInSnapshots: true });
 
 /**
  * @customElement
@@ -116,6 +113,7 @@ class DougpediaApp extends connect(store)(LitElement) {
   }
 
   _stateChanged(state) {
+    console.log(state.state.jokeList);
     this.jokeList = state.state.jokeList;
   }
 
@@ -138,21 +136,17 @@ class DougpediaApp extends connect(store)(LitElement) {
   }
 
   _loadJokeList() {
-    firebase.firestore()
-      .collection('jokes')
-      .get()
-      .then(res =>
+    firebase.database()
+      .ref(`/jokes`)
+      .on('value', snapshot => {
+        const jokes = snapshot.val();
         store.dispatch({
           type: 'UPDATE_JOKE_LIST',
-          data: {
-            jokeList: res.docs.map(doc =>
-              doc.data()
-            )
+          data: { 
+            jokeList: Object.keys(jokes).map(key => jokes[key])
           }
         })
-      ).catch(err =>
-        console.error(err)
-      );
+      });
   }
 
   signin() {
