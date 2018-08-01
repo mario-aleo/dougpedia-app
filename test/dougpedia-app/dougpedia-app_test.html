@@ -26,19 +26,19 @@
 
     <test-fixture id="Default">
       <template>
-        <dougpedia-app unresolved unauthorized></dougpedia-app>
+        <dougpedia-app unresolved></dougpedia-app>
       </template>
     </test-fixture>
 
     <test-fixture id="SignedIn">
       <template>
-        <dougpedia-app unresolved unauthorized></dougpedia-app>
+        <dougpedia-app unresolved></dougpedia-app>
       </template>
     </test-fixture>
 
     <test-fixture id="SignedOut">
       <template>
-        <dougpedia-app unresolved unauthorized></dougpedia-app>
+        <dougpedia-app unresolved></dougpedia-app>
       </template>
     </test-fixture>
 
@@ -47,10 +47,10 @@
 
         test('Initializing app works', function() {
           var element = fixture('Default');
-          assert.equal(element.hasAttribute('unauthorized'), true);
           var elementShadowRoot = element.shadowRoot;
           var elementLogin = elementShadowRoot.querySelector('#login');
           var elementLoginStyle = window.getComputedStyle(elementLogin);
+          assert.equal(elementLogin.hasAttribute('authorized'), false);
           assert.equal(elementLoginStyle.opacity, 1);
           assert.equal(elementLoginStyle.visibility, 'visible');
         });
@@ -63,24 +63,25 @@
             email: 'email@email.com',
             displayName: 'User Name'
           });
-          assert.equal(element.hasAttribute('unauthorized'), false);
           var elementLogin = elementShadowRoot.querySelector('#login');
           var elementLoginStyle = window.getComputedStyle(elementLogin);
+          assert.equal(elementLogin.hasAttribute('authorized'), true);
           assert.equal(elementLoginStyle.opacity, 0);
           assert.equal(elementLoginStyle.visibility, 'hidden');
         });
 
-        test('User signed in', function() {
+        test('User signed out', function() {
           var element = fixture('SignedIn');
           var elementShadowRoot = element.shadowRoot;
           element._onAuthChanged({
             uid: '123',
             email: 'email@email.com',
             displayName: 'User Name'
-          });element._onAuthChanged(null);
-          assert.equal(element.hasAttribute('unauthorized'), true);
+          });
+          element._onAuthChanged(null);
           var elementLogin = elementShadowRoot.querySelector('#login');
           var elementLoginStyle = window.getComputedStyle(elementLogin);
+          assert.equal(elementLogin.hasAttribute('authorized'), false);
           assert.equal(elementLoginStyle.opacity, 1);
           assert.equal(elementLoginStyle.visibility, 'visible');
         });
