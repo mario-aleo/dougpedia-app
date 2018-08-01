@@ -63,11 +63,14 @@
             email: 'email@email.com',
             displayName: 'User Name'
           });
-          var elementLogin = elementShadowRoot.querySelector('#login');
-          var elementLoginStyle = window.getComputedStyle(elementLogin);
-          assert.equal(elementLogin.hasAttribute('authorized'), true);
-          assert.equal(elementLoginStyle.opacity, 0);
-          assert.equal(elementLoginStyle.visibility, 'hidden');
+          element.renderComplete
+            .then(function () {
+              var elementLogin = elementShadowRoot.querySelector('#login');
+              var elementLoginStyle = window.getComputedStyle(elementLogin);
+              assert.equal(elementLogin.hasAttribute('authorized'), true);
+              assert.equal(elementLoginStyle.opacity, 0);
+              assert.equal(elementLoginStyle.visibility, 'hidden');
+            });
         });
 
         test('User signed out', function() {
@@ -79,11 +82,14 @@
             displayName: 'User Name'
           });
           element._onAuthChanged(null);
-          var elementLogin = elementShadowRoot.querySelector('#login');
-          var elementLoginStyle = window.getComputedStyle(elementLogin);
-          assert.equal(elementLogin.hasAttribute('authorized'), false);
-          assert.equal(elementLoginStyle.opacity, 1);
-          assert.equal(elementLoginStyle.visibility, 'visible');
+          element.renderComplete
+            .then(function () {
+              var elementLogin = elementShadowRoot.querySelector('#login');
+              var elementLoginStyle = window.getComputedStyle(elementLogin);
+              assert.equal(elementLogin.hasAttribute('authorized'), false);
+              assert.equal(elementLoginStyle.opacity, 1);
+              assert.equal(elementLoginStyle.visibility, 'visible');
+            });
         });
       });
     </script>
