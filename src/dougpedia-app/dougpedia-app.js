@@ -1,9 +1,11 @@
 import { html, LitElement } from '@polymer/lit-element';
-import { connect, installRouter } from 'pwa-helpers';
+import { connect, installOfflineWatcher } from 'pwa-helpers';
+import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings';
 import store from 'dougpedia-store/dougpedia-store';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import '@material/mwc-icon';
 import '@material/mwc-button';
 
 firebase.initializeApp({
@@ -21,18 +23,29 @@ firebase.initializeApp({
  */
 class DougpediaApp extends connect(store)(LitElement) {
   static get properties() {
-    return {};
+    return {
+      _offline: Boolean,
+      _authorized: Boolean
+    };
   }
 
   constructor() {
     super();
 
-    this.removeAttribute('unresolved');
+    setPassiveTouchGestures(true);
+
+    installOfflineWatcher(
+      this._onNetworkChanged.bind(this)
+    );
 
     firebase.auth()
       .onAuthStateChanged(
         this._onAuthChanged.bind(this)
       );
+  }
+
+  _firstRendered() {
+    this.removeAttribute('unresolved');
   }
 
   _render() {
@@ -47,6 +60,11 @@ class DougpediaApp extends connect(store)(LitElement) {
             'appContent';
           min-height: 100vh;
           background-image: linear-gradient(-210deg, #45D4FB 0%, #57E9F2 60%, #9EFBD3 100%)
+        }
+
+        mwc-icon {
+          color: #FFF;
+          user-select: none;
         }
       </style>
 
@@ -63,36 +81,74 @@ class DougpediaApp extends connect(store)(LitElement) {
       <style>
         #header {
           grid-area: appHeader;
+          display: grid;
+          grid-template-rows: 100%;
+          grid-template-columns: 64px auto 64px;
+          grid-template-areas:
+            "signOut . networkStatus";
+        }
+
+        #header mwc-icon {
+          text-align: center;
+          line-height: 64px;
+        }
+
+        #sign-out {
+          --mdc-icon-size: 34px;
+          grid-area: signOut;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity ease 0.25s, visibility ease 0.25s;
+          will-change: opacity, transition, visibility;
+        }
+        #sign-out[authorized] {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        #network-status {
+          --mdc-icon-size: 40px;
+          grid-area: networkStatus;
         }
       </style>
 
-      <section id="header"></section>
+      <section id="header">
+        <mwc-icon id="sign-out"
+          authorized?=${this._authorized}
+          on-click="${this.signout}">
+          exit_to_app
+        </mwc-icon>
+
+        <mwc-icon id="network-status">
+          ${this._offline ? 'cloud_off' : 'cloud_queue'}
+        </mwc-icon>
+      </section>
     `;
   }
 
   _loginFragment() {
     return html`
       <style>
-        :host(:not([unauthorized])) #login {
+        #login[authorized] {
           opacity: 0;
           visibility: hidden;
         }
 
         #login {
           position: absolute;
-          top: 64px;
+          top: 0;
           left: 0;
           display: flex;
           align-items: center;
           justify-content: center;
           width: 100%;
-          height: calc(100vh - 64px);
+          height: 100%;
           transition: opacity ease 0.25s, visibility ease 0.25s;
           will-change: opacity, transition, visibility;
         }
       </style>
 
-      <section id="login">
+      <section id="login" authorized?=${this._authorized}>
         <mwc-button raised on-click="${this.signin}">
           Sign In
         </mwc-button>
@@ -113,13 +169,12 @@ class DougpediaApp extends connect(store)(LitElement) {
   }
 
   _stateChanged(state) {
-    console.log(state.state.jokeList);
     this.jokeList = state.state.jokeList;
   }
 
   _onAuthChanged(user) {
     if (user) {
-      this.removeAttribute('unauthorized');
+      this._authorized = true;
       store.dispatch({
         type: 'SIGNIN',
         data: {
@@ -130,9 +185,13 @@ class DougpediaApp extends connect(store)(LitElement) {
       });
       this._loadJokeList();
     } else {
-      this.setAttribute('unauthorized', '');
+      this._authorized = false;
       store.dispatch({ type: 'SIGNOUT' });
     }
+  }
+
+  _onNetworkChanged(offline) {
+    this._offline = offline;
   }
 
   _loadJokeList() {
@@ -142,7 +201,7 @@ class DougpediaApp extends connect(store)(LitElement) {
         const jokes = snapshot.val();
         store.dispatch({
           type: 'UPDATE_JOKE_LIST',
-          data: { 
+          data: {
             jokeList: Object.keys(jokes).map(key => jokes[key])
           }
         })
@@ -150,6 +209,7 @@ class DougpediaApp extends connect(store)(LitElement) {
   }
 
   signin() {
+    this.blur();
     firebase.auth()
       .signInWithPopup(
         new firebase.auth.GoogleAuthProvider()
