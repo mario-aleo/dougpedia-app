@@ -94,7 +94,6 @@ class DougpediaApp extends connect(store)(LitElement) {
         }
 
         #sign-out {
-          --mdc-icon-size: 34px;
           grid-area: signOut;
           opacity: 0;
           visibility: hidden;
@@ -107,7 +106,6 @@ class DougpediaApp extends connect(store)(LitElement) {
         }
 
         #network-status {
-          --mdc-icon-size: 40px;
           grid-area: networkStatus;
         }
       </style>
