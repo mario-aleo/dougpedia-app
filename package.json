@@ -3,14 +3,15 @@
   "description": "Dougpedia App",
   "main": "src/dougpedia-app/dougpedia-app.js",
   "scripts": {
-    "start": "polymer serve --compile=always",
+    "start": "polymer serve",
     "build": "polymer build",
     "test": "npm run test:unit",
     "test:unit": "polymer test --module-resolution=node --npm"
   },
   "dependencies": {
-    "@firebase/webchannel-wrapper": "^0.2.8",
     "@material/mwc-button": "^0.1.2",
+    "@material/mwc-fab": "^0.1.2",
+    "@material/mwc-icon": "^0.1.2",
     "@polymer/lit-element": "^0.5.2",
     "@polymer/polymer": "^3.0.0",
     "dougpedia-store": "https://gitlab.com/dougpedia/dougpedia-store.git",
