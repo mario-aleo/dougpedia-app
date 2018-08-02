@@ -14,13 +14,13 @@
     "@material/mwc-fab": "^0.1.2",
     "@material/mwc-icon": "^0.1.2",
     "@polymer/lit-element": "^0.5.2",
-    "@polymer/polymer": "^3.0.0",
+    "@polymer/polymer": "^3.0.5",
     "dougpedia-store": "https://gitlab.com/dougpedia/dougpedia-store.git",
     "firebase": "5.3.0",
     "pwa-helpers": "^0.8.3"
   },
   "devDependencies": {
-    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "@webcomponents/webcomponentsjs": "^2.0.4",
     "wct-browser-legacy": "^1.0.0"
   },
   "version": "0.0.1",
