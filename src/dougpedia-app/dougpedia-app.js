@@ -111,16 +111,16 @@ class DougpediaApp extends connect(store)(LitElement) {
 
       <section id="header">
         <mwc-icon id="sign-out"
-          authorized?=${this._authorized}
+          authorized?="${this._authorized}"
           on-click="${this.signout}">
           exit_to_app
         </mwc-icon>
 
         <mwc-icon id="network-status">
           ${this._offline
-            ? html`cloud_off`
-            : html`cloud_queue`
-          }
+        ? html`cloud_off`
+        : html`cloud_queue`
+      }
         </mwc-icon>
       </section>
     `;
@@ -129,11 +129,6 @@ class DougpediaApp extends connect(store)(LitElement) {
   _loginFragment() {
     return html`
       <style>
-        #login[authorized] {
-          opacity: 0;
-          visibility: hidden;
-        }
-
         #login {
           position: absolute;
           top: 0;
@@ -146,11 +141,17 @@ class DougpediaApp extends connect(store)(LitElement) {
           transition: opacity ease 0.25s, visibility ease 0.25s;
           will-change: opacity, transition, visibility;
         }
+        #login[authorized] {
+          opacity: 0;
+          visibility: hidden;
+        }
       </style>
 
-      <section id="login" authorized?=${this._authorized}>
-        <mwc-button raised on-click="${this.signin}">
-          Sign In
+      <section id="login"
+        authorized?="${this._authorized}">
+        <mwc-button raised
+          on-click="${this.signin}">
+          <span>Sign In</span>
         </mwc-button>
       </section>
     `;
@@ -167,6 +168,12 @@ class DougpediaApp extends connect(store)(LitElement) {
           position: fixed;
           bottom: 32px;
           right: 32px;
+          transition: opacity ease 0.25s, visibility ease 0.25s;
+          will-change: opacity, transition, visibility;
+        }
+        #add[disabled] {
+          opacity: 0;
+          visibility: hidden;
         }
       </style>
 
@@ -174,13 +181,16 @@ class DougpediaApp extends connect(store)(LitElement) {
         ${this._jokeList.map(joke =>
           html`
             <dougpedia-joke-card
-              key$="${joke.key}">
+              key$="${joke}">
             </dougpedia-joke-card>
           `
         )}
       </section>
 
-      <mwc-fab id="add" icon="add"></mwc-fab>
+      <mwc-fab id="add"
+        icon="add"
+        disabled?="${!this._authorized || this._offline}">
+      </mwc-fab>
     `;
   }
   /* */
@@ -220,20 +230,13 @@ class DougpediaApp extends connect(store)(LitElement) {
       .then(res => console.log(res))
       .catch(err => console.error(err));
     */
-    const snapshotToList = snapshotRef => {
-      const snapshot = snapshotRef.val();
-      return Object.keys(snapshot)
-        .map(key =>
-          Object.assign(snapshot[key], { key })
-        );
-    };
     firebase.database()
       .ref(`/jokes`)
       .on('value', snapshot =>
         store.dispatch({
           type: 'UPDATE_JOKE_LIST',
           data: {
-            jokeList: snapshotToList(snapshot)
+            jokeList: Object.keys(snapshot.val())
           }
         })
       );
