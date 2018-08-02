@@ -5,6 +5,7 @@ import store from 'dougpedia-store/dougpedia-store';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import '@material/mwc-fab';
 import '@material/mwc-icon';
 import '@material/mwc-button';
 
@@ -25,7 +26,8 @@ class DougpediaApp extends connect(store)(LitElement) {
   static get properties() {
     return {
       _offline: Boolean,
-      _authorized: Boolean
+      _jokeList: Array,
+      _authorized: Boolean,
     };
   }
 
@@ -115,7 +117,10 @@ class DougpediaApp extends connect(store)(LitElement) {
         </mwc-icon>
 
         <mwc-icon id="network-status">
-          ${this._offline ? 'cloud_off' : 'cloud_queue'}
+          ${this._offline
+            ? html`cloud_off`
+            : html`cloud_queue`
+          }
         </mwc-icon>
       </section>
     `;
@@ -157,9 +162,25 @@ class DougpediaApp extends connect(store)(LitElement) {
         #content {
           grid-area: appContent;
         }
+
+        #add {
+          position: fixed;
+          bottom: 32px;
+          right: 32px;
+        }
       </style>
 
-      <section id="content"></section>
+      <section id="content">
+        ${this._jokeList.map(joke =>
+          html`
+            <dougpedia-joke-card
+              key$="${joke.key}">
+            </dougpedia-joke-card>
+          `
+        )}
+      </section>
+
+      <mwc-fab id="add" icon="add"></mwc-fab>
     `;
   }
   /* */
@@ -221,7 +242,7 @@ class DougpediaApp extends connect(store)(LitElement) {
 
   /* Observers */
   _stateChanged(state) {
-    this.jokeList = state.state.jokeList;
+    this._jokeList = state.state.jokeList;
   }
 
   _onAuthChanged(user) {
