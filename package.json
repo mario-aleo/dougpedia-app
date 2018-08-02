@@ -5,7 +5,8 @@
   "scripts": {
     "start": "polymer serve",
     "build": "polymer build",
-    "test": "npm run test:unit",
+    "test": "npm run test:lint && npm run test:unit",
+    "test:lint": "polymer lint",
     "test:unit": "polymer test --module-resolution=node --npm"
   },
   "dependencies": {
