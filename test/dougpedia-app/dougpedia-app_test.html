@@ -30,13 +30,13 @@
       </template>
     </test-fixture>
 
-    <test-fixture id="SignedIn">
+    <test-fixture id="SignIn">
       <template>
         <dougpedia-app unresolved></dougpedia-app>
       </template>
     </test-fixture>
 
-    <test-fixture id="SignedOut">
+    <test-fixture id="SignOut">
       <template>
         <dougpedia-app unresolved></dougpedia-app>
       </template>
@@ -44,8 +44,7 @@
 
     <script type="module">
       suite('dougpedia-app', function() {
-
-        test('Initializing app works', function() {
+        test('Show login when app initialize', function() {
           var element = fixture('Default');
           var elementShadowRoot = element.shadowRoot;
           var elementLogin = elementShadowRoot.querySelector('#login');
@@ -54,9 +53,19 @@
           assert.equal(elementLoginStyle.opacity, 1);
           assert.equal(elementLoginStyle.visibility, 'visible');
         });
+        
+        test('Hide add button when app initialize', function() {
+          var element = fixture('Default');
+          var elementShadowRoot = element.shadowRoot;
+          var elementAdd = elementShadowRoot.querySelector('#add');
+          var elementAddStyle = window.getComputedStyle(elementAdd);
+          assert.equal(elementAdd.hasAttribute('disabled'), true);
+          assert.equal(elementAddStyle.opacity, 0);
+          assert.equal(elementAddStyle.visibility, 'hidden');
+        });
 
-        test('User signed in', function() {
-          var element = fixture('SignedIn');
+        test('Hide login when user sign in', function() {
+          var element = fixture('SignIn');
           var elementShadowRoot = element.shadowRoot;
           element._onAuthChanged({
             uid: '123',
@@ -73,8 +82,26 @@
             });
         });
 
-        test('User signed out', function() {
-          var element = fixture('SignedIn');
+        test('Show add button when user sign in', function() {
+          var element = fixture('SignIn');
+          var elementShadowRoot = element.shadowRoot;
+          element._onAuthChanged({
+            uid: '123',
+            email: 'email@email.com',
+            displayName: 'User Name'
+          });
+          element.renderComplete
+            .then(function () {
+              var elementAdd = elementShadowRoot.querySelector('#add');
+              var elementAddStyle = window.getComputedStyle(elementAdd);
+              assert.equal(elementAdd.hasAttribute('disabled'), false);
+              assert.equal(elementAddStyle.opacity, 1);
+              assert.equal(elementAddStyle.visibility, 'visible');
+            });
+        });
+
+        test('Show login when user sign out', function() {
+          var element = fixture('SignOut');
           var elementShadowRoot = element.shadowRoot;
           element._onAuthChanged({
             uid: '123',
@@ -89,6 +116,25 @@
               assert.equal(elementLogin.hasAttribute('authorized'), false);
               assert.equal(elementLoginStyle.opacity, 1);
               assert.equal(elementLoginStyle.visibility, 'visible');
+            });
+        });
+
+        test('Hide add button when user sign out', function() {
+          var element = fixture('SignOut');
+          var elementShadowRoot = element.shadowRoot;
+          element._onAuthChanged({
+            uid: '123',
+            email: 'email@email.com',
+            displayName: 'User Name'
+          });
+          element._onAuthChanged(null);
+          element.renderComplete
+            .then(function () {
+              var elementAdd = elementShadowRoot.querySelector('#add');
+              var elementAddStyle = window.getComputedStyle(elementAdd);
+              assert.equal(elementAdd.hasAttribute('disabled'), true);
+              assert.equal(elementAddStyle.opacity, 0);
+              assert.equal(elementAddStyle.visibility, 'hidden');
             });
         });
       });
