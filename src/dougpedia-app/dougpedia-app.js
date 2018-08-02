@@ -44,10 +44,7 @@ class DougpediaApp extends connect(store)(LitElement) {
       );
   }
 
-  _firstRendered() {
-    this.removeAttribute('unresolved');
-  }
-
+  /* Render */
   _render() {
     return html`
       <style>
@@ -165,7 +162,64 @@ class DougpediaApp extends connect(store)(LitElement) {
       <section id="content"></section>
     `;
   }
+  /* */
 
+  /* Lifecycle */
+  _firstRendered() {
+    this.removeAttribute('unresolved');
+  }
+  /* */
+
+  /* Public */
+  signin() {
+    this.blur();
+    firebase.auth()
+      .signInWithPopup(
+        new firebase.auth.GoogleAuthProvider()
+      );
+  }
+
+  signout() {
+    firebase.auth().signOut();
+  }
+  /* */
+
+  /* Private */
+  _loadJokeList() {
+    /*
+    firebase.database()
+      .ref('/jokes')
+      .push({
+        uid: 'momo',
+        text: 'joke',
+        rating: [
+          {uid: 'lala', rate: 5}
+        ]
+      })
+      .then(res => console.log(res))
+      .catch(err => console.error(err));
+    */
+    const snapshotToList = snapshotRef => {
+      const snapshot = snapshotRef.val();
+      return Object.keys(snapshot)
+        .map(key =>
+          Object.assign(snapshot[key], { key })
+        );
+    };
+    firebase.database()
+      .ref(`/jokes`)
+      .on('value', snapshot =>
+        store.dispatch({
+          type: 'UPDATE_JOKE_LIST',
+          data: {
+            jokeList: snapshotToList(snapshot)
+          }
+        })
+      );
+  }
+  /* */
+
+  /* Observers */
   _stateChanged(state) {
     this.jokeList = state.state.jokeList;
   }
@@ -191,32 +245,7 @@ class DougpediaApp extends connect(store)(LitElement) {
   _onNetworkChanged(offline) {
     this._offline = offline;
   }
-
-  _loadJokeList() {
-    firebase.database()
-      .ref(`/jokes`)
-      .on('value', snapshot => {
-        const jokes = snapshot.val();
-        store.dispatch({
-          type: 'UPDATE_JOKE_LIST',
-          data: {
-            jokeList: Object.keys(jokes).map(key => jokes[key])
-          }
-        })
-      });
-  }
-
-  signin() {
-    this.blur();
-    firebase.auth()
-      .signInWithPopup(
-        new firebase.auth.GoogleAuthProvider()
-      );
-  }
-
-  signout() {
-    firebase.auth().signOut();
-  }
+  /* */
 }
 
 window.customElements.define('dougpedia-app', DougpediaApp);
