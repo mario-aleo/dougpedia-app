@@ -186,7 +186,7 @@ class DougpediaApp extends connect(store)(LitElement) {
         }
 
         dougpedia-joke-card {
-          padding: 32px 16px;
+          margin: 32px 16px;
         }
       </style>
 
@@ -271,7 +271,7 @@ class DougpediaApp extends connect(store)(LitElement) {
       });
       this.shadowRoot.querySelector('iron-swipeable-container')
         .appendChild(jokeCard);
-      requestAnimationFrame(() => 
+      requestAnimationFrame(() =>
         requestAnimationFrame(() => {
           Object.assign(jokeCard.style, {
             transform: `translateX(0)`

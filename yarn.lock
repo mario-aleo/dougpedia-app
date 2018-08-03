@@ -436,14 +436,12 @@ dom-storage@2.1.0:
 
 "dougpedia-joke-card@https://gitlab.com/dougpedia/dougpedia-joke-card.git":
   version "0.0.1"
-  resolved "https://gitlab.com/dougpedia/dougpedia-joke-card.git#1b8b1687c8e8d6663bd93822f713a1301cc7ac54"
+  resolved "https://gitlab.com/dougpedia/dougpedia-joke-card.git#1bd74a687a444ff915a9d1482c892972014b9f53"
   dependencies:
     "@material/mwc-icon" "^0.1.2"
     "@polymer/lit-element" "^0.5.2"
     "@polymer/polymer" "^3.0.0"
-    dougpedia-store "https://gitlab.com/dougpedia/dougpedia-store.git"
     firebase "^5.3.0"
-    pwa-helpers "^0.8.3"
 
 "dougpedia-store@https://gitlab.com/dougpedia/dougpedia-store.git":
   version "0.0.1"
