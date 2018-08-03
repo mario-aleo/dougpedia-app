@@ -47,6 +47,13 @@ class DougpediaApp extends connect(store)(LitElement) {
       .onAuthStateChanged(
         this._onAuthChanged.bind(this)
       );
+
+    
+    window.addEventListener(
+      "devicemotion",
+      this._onMotionChange.bind(this),
+      true
+    );
   }
 
   /* Render */
@@ -318,6 +325,20 @@ class DougpediaApp extends connect(store)(LitElement) {
 
   _onNetworkChanged(offline) {
     this._offline = offline;
+  }
+
+  _onMotionChange(evt) {
+    const {acceleration, rotationRate, interval} = evt;
+    if (Math.abs(acceleration.x) >= 30) {
+      store.dispatch({
+        type: 'UPDATE_JOKE_LIST',
+        data: {
+          jokeList: []
+        }
+      });
+      this._activeJoke = 0;
+      this._loadJokeList();
+    }
   }
   /* */
 }
