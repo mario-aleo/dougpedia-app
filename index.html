@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
    
+    <base href="/">
+
     <title>Dougpedia</title>
     <meta name="description" content="Dougpedia">
     <meta name="theme-color" content="#45D4FB">
@@ -55,7 +57,10 @@
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
           navigator.serviceWorker
-            .register('service-worker.js');
+            .register(
+              'service-worker.js'
+              , {scope: '/'}
+            );
         });
       }
 
