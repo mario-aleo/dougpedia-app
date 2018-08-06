@@ -226,7 +226,7 @@ class DougpediaApp extends connect(store)(LitElement) {
   signin() {
     this.blur();
     firebase.auth()
-      .signInWithPopup(
+      .signInWithRedirect(
         new firebase.auth.GoogleAuthProvider()
       );
   }
