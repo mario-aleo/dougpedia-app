@@ -4,9 +4,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
    
+    <base href="/">
+
     <title>Dougpedia</title>
     <meta name="description" content="Dougpedia">
     <meta name="theme-color" content="#45D4FB">
+    <link rel="shortcut icon" href="assets/icons/512x512.png"/>
+
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Dougpedia">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Dougpedia">
+    <link rel="apple-touch-icon" href="assets/icons/48x48.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/icons/72x72.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="assets/icons/96x96.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/icons/144x144.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="assets/icons/192x192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="assets/icons/192x192.png">
 
     <style>
       :root {
@@ -20,6 +40,8 @@
         min-height: 100vh;
         padding: 0;
         margin: 0;
+        font-family: Helvetica,Arial,sans-serif;
+        -webkit-font-smoothing: antialiased;
       }
 
       dougpedia-app[unresolved] {
@@ -33,18 +55,24 @@
       }
     </style>
 
-    <!-- See https://goo.gl/OOhYW5 -->
-    <link rel="manifest" href="/manifest.json">
-    <link rel="shortcut icon" href="/assets/icons/icon.png"/>
-
     <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker
+            .register(
+              'service-worker.js'
+              , {scope: '/'}
+            );
+        });
+      }
+
       window.process = { env: { NODE_ENV: 'production' } };
     </script>
   </head>
   <body>
     <dougpedia-app unresolved></dougpedia-app>
     
-    <script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script type="module" src="/src/dougpedia-app/dougpedia-app.js"></script>
+    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script type="module" src="src/dougpedia-app/dougpedia-app.js"></script>
   </body>
 </html>
