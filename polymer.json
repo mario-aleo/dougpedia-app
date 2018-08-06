@@ -2,12 +2,11 @@
   "entrypoint": "index.html",
   "shell": "src/dougpedia-app/dougpedia-app.js",
   "sources": [
-    "src/dougpedia-app/dougpedia-app.js",
-    "package.json"
+    "assets/**/*"
   ],
   "extraDependencies": [
     "manifest.json",
-    "node_modules/@webcomponents/webcomponentsjs/**"
+    "node_modules/@webcomponents/webcomponentsjs/*"
   ],
   "moduleResolution": "node",
   "npm": true,

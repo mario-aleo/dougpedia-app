@@ -48,7 +48,7 @@ class DougpediaApp extends connect(store)(LitElement) {
         this._onAuthChanged.bind(this)
       );
 
-    
+
     window.addEventListener(
       "devicemotion",
       this._onMotionChange.bind(this),
@@ -194,6 +194,9 @@ class DougpediaApp extends connect(store)(LitElement) {
 
         dougpedia-joke-card {
           margin: 32px 16px;
+        }
+        iron-swipeable-container {
+          overflow: hidden;
         }
       </style>
 

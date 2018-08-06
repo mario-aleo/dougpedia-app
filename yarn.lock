@@ -436,7 +436,7 @@ dom-storage@2.1.0:
 
 "dougpedia-joke-card@https://gitlab.com/dougpedia/dougpedia-joke-card.git":
   version "0.0.1"
-  resolved "https://gitlab.com/dougpedia/dougpedia-joke-card.git#1bd74a687a444ff915a9d1482c892972014b9f53"
+  resolved "https://gitlab.com/dougpedia/dougpedia-joke-card.git#19ad523ec90af29e70479cef79fde97c5f759228"
   dependencies:
     "@material/mwc-icon" "^0.1.2"
     "@polymer/lit-element" "^0.5.2"
