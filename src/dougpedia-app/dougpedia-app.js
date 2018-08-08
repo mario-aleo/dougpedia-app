@@ -1,13 +1,11 @@
 import { html, LitElement } from '@polymer/lit-element';
 import { connect, installOfflineWatcher } from 'pwa-helpers';
 import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings';
-import { signIn, signOut, loadJokeList, observeAuthState } from 'dougpedia-firebase';
+import { signIn, signOut, observeAuthState } from 'dougpedia-firebase';
 import store from 'dougpedia-store/dougpedia-store';
 import '@material/mwc-fab';
 import '@material/mwc-icon';
 import '@material/mwc-button';
-import 'dougpedia-joke-card';
-import '@polymer/iron-swipeable-container';
 
 /**
  * @customElement
@@ -34,12 +32,6 @@ class DougpediaApp extends connect(store)(LitElement) {
 
     observeAuthState(
       this._onAuthChanged.bind(this)
-    );
-
-    window.addEventListener(
-      "devicemotion",
-      this._onMotionChange.bind(this),
-      true
     );
   }
 
@@ -179,26 +171,19 @@ class DougpediaApp extends connect(store)(LitElement) {
           visibility: hidden;
         }
 
-        dougpedia-joke-card {
-          margin: 32px 16px;
-        }
-        iron-swipeable-container {
-          overflow: hidden;
-        }
       </style>
 
       <section id="content"
         authorized?="${this._authorized}">
-        <iron-swipeable-container disabled?=${!this._jokeList[this._activeJoke]}
-          on-iron-swipe="${this._jokeDismissed.bind(this)}">
-          <dougpedia-joke-card></dougpedia-joke-card>
-        </iron-swipeable-container>
-      </section>
+        <dougpedia-joke-list></dougpedia-joke-list>
 
-      <mwc-fab id="add"
-        icon="add"
-        disabled?="${!this._authorized || this._offline}">
-      </mwc-fab>
+        <!-- dougpedia-joke-upsert -->
+
+        <mwc-fab id="add"
+          icon="add"
+          disabled?="${!this._authorized || this._offline}">
+        </mwc-fab>
+      </section>
     `;
   }
   /* */
@@ -221,71 +206,6 @@ class DougpediaApp extends connect(store)(LitElement) {
   /* */
 
   /* Private */
-  _loadJokeList() {
-    loadJokeList()
-      .then(snapshot => {
-        store.dispatch({
-          type: 'UPDATE_JOKE_LIST',
-          data: {
-            jokeList: Object.keys(
-              snapshot.val()
-            )
-          }
-        });
-        this._activeJoke = 0;
-        this._setJokeCardKey();
-      });
-  }
-
-  _jokeDismissed(evt) {
-    if (evt.detail.direction == 'left') {
-      if (this._activeJoke == this._jokeList.length - 1)
-        this._activeJoke = 0;
-      else
-        this._activeJoke++;
-    } else {
-      if (this._activeJoke == 0)
-        this._activeJoke = this._jokeList.length - 1;
-      else
-        this._activeJoke--;
-    }
-    this._appendJokeCard(evt.detail.direction)
-      .then(
-        this._setJokeCardKey.bind(this)
-      );
-  }
-
-  _appendJokeCard(direction) {
-    return new Promise(resolve => {
-      const jokeCard = document.createElement('dougpedia-joke-card');
-      jokeCard.setAttribute('key', '');
-      Object.assign(jokeCard.style, {
-        transform: `
-          translateX(${direction == 'left' ? '100%': '-100%'})
-        `
-      });
-      this.shadowRoot.querySelector('iron-swipeable-container')
-        .appendChild(jokeCard);
-      requestAnimationFrame(() =>
-        requestAnimationFrame(() => {
-          Object.assign(jokeCard.style, {
-            transform: `translateX(0)`
-          });
-          jokeCard.addEventListener(
-            "transitionend",
-            () => setTimeout(resolve, 200),
-            false
-          );
-        })
-      );
-    });
-  }
-
-  _setJokeCardKey() {
-    this.shadowRoot
-      .querySelector('dougpedia-joke-card')
-      .setAttribute('key', this._jokeList[this._activeJoke]);
-  }
   /* */
 
   /* Observers */
@@ -304,7 +224,9 @@ class DougpediaApp extends connect(store)(LitElement) {
           name: user.displayName,
         }
       });
-      this._loadJokeList();
+      this.shadowRoot
+        .querySelector('dougpedia-joke-list')
+        .loadJokeList();
     } else {
       this._authorized = false;
       store.dispatch({ type: 'SIGNOUT' });
@@ -313,20 +235,6 @@ class DougpediaApp extends connect(store)(LitElement) {
 
   _onNetworkChanged(offline) {
     this._offline = offline;
-  }
-
-  _onMotionChange(evt) {
-    const {acceleration, rotationRate, interval} = evt;
-    if (Math.abs(acceleration.x) >= 30) {
-      store.dispatch({
-        type: 'UPDATE_JOKE_LIST',
-        data: {
-          jokeList: []
-        }
-      });
-      this._activeJoke = 0;
-      this._loadJokeList();
-    }
   }
   /* */
 }
