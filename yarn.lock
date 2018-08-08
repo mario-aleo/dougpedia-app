@@ -434,14 +434,20 @@ dom-storage@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/dom-storage/-/dom-storage-2.1.0.tgz#00fb868bc9201357ea243c7bcfd3304c1e34ea39"
 
+"dougpedia-firebase@https://gitlab.com/dougpedia/dougpedia-firebase.git":
+  version "0.0.1"
+  resolved "https://gitlab.com/dougpedia/dougpedia-firebase.git#05068ff4b64cf152ca524e207d7977116bec88db"
+  dependencies:
+    firebase "^5.3.1"
+
 "dougpedia-joke-card@https://gitlab.com/dougpedia/dougpedia-joke-card.git":
   version "0.0.1"
-  resolved "https://gitlab.com/dougpedia/dougpedia-joke-card.git#19ad523ec90af29e70479cef79fde97c5f759228"
+  resolved "https://gitlab.com/dougpedia/dougpedia-joke-card.git#c145f5c4f26110d2f0b30fed83d6d3f0b03b549f"
   dependencies:
     "@material/mwc-icon" "^0.1.2"
     "@polymer/lit-element" "^0.5.2"
     "@polymer/polymer" "^3.0.0"
-    firebase "^5.3.0"
+    dougpedia-firebase "https://gitlab.com/dougpedia/dougpedia-firebase.git"
 
 "dougpedia-store@https://gitlab.com/dougpedia/dougpedia-store.git":
   version "0.0.1"
@@ -478,7 +484,7 @@ firebase@5.3.0:
     "@firebase/polyfill" "0.3.3"
     "@firebase/storage" "0.2.3"
 
-firebase@^5.3.0:
+firebase@^5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/firebase/-/firebase-5.3.1.tgz#99df1a9b101d12cd765ef010bb015fdb0b76850b"
   dependencies:

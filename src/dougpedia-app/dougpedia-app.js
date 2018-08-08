@@ -1,24 +1,13 @@
 import { html, LitElement } from '@polymer/lit-element';
 import { connect, installOfflineWatcher } from 'pwa-helpers';
 import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings';
+import { signIn, signOut, loadJokeList, observeAuthState } from 'dougpedia-firebase';
 import store from 'dougpedia-store/dougpedia-store';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/database';
 import '@material/mwc-fab';
 import '@material/mwc-icon';
 import '@material/mwc-button';
 import 'dougpedia-joke-card';
 import '@polymer/iron-swipeable-container';
-
-firebase.initializeApp({
-  apiKey: "AIzaSyCsm-Pyr1cW-BOf8po98j0nEMH164X-8Z8",
-  authDomain: "dougpedia-b2a43.firebaseapp.com",
-  databaseURL: "https://dougpedia-b2a43.firebaseio.com",
-  projectId: "dougpedia-b2a43",
-  storageBucket: "dougpedia-b2a43.appspot.com",
-  messagingSenderId: "332394149499"
-});
 
 /**
  * @customElement
@@ -43,11 +32,9 @@ class DougpediaApp extends connect(store)(LitElement) {
       this._onNetworkChanged.bind(this)
     );
 
-    firebase.auth()
-      .onAuthStateChanged(
-        this._onAuthChanged.bind(this)
-      );
-
+    observeAuthState(
+      this._onAuthChanged.bind(this)
+    );
 
     window.addEventListener(
       "devicemotion",
@@ -68,7 +55,7 @@ class DougpediaApp extends connect(store)(LitElement) {
             'appHeader'
             'appContent';
           min-height: 100vh;
-          background-image: linear-gradient(-210deg, #45D4FB 0%, #57E9F2 60%, #9EFBD3 100%)
+          background-image: linear-gradient(-210deg, #45D4FB 0%, #57E9F2 80%, #A3FDDD 100%)
         }
 
         mwc-icon {
@@ -225,31 +212,29 @@ class DougpediaApp extends connect(store)(LitElement) {
   /* Public */
   signin() {
     this.blur();
-    firebase.auth()
-      .signInWithRedirect(
-        new firebase.auth.GoogleAuthProvider()
-      );
+    signIn();
   }
 
   signout() {
-    firebase.auth().signOut();
+    signOut();
   }
   /* */
 
   /* Private */
   _loadJokeList() {
-    firebase.database()
-      .ref(`/jokes`)
-      .on('value', snapshot => {
+    loadJokeList()
+      .then(snapshot => {
         store.dispatch({
           type: 'UPDATE_JOKE_LIST',
           data: {
-            jokeList: Object.keys(snapshot.val())
+            jokeList: Object.keys(
+              snapshot.val()
+            )
           }
         });
         this._activeJoke = 0;
         this._setJokeCardKey();
-    });
+      });
   }
 
   _jokeDismissed(evt) {
