@@ -210,6 +210,12 @@
   version "0.35.0"
   resolved "https://registry.yarnpkg.com/@material/typography/-/typography-0.35.0.tgz#23ad7eb7c9789e69c7c3fa54df8fc311cd7fc4b1"
 
+"@polymer/iron-swipeable-container@^3.0.0-pre.21":
+  version "3.0.0-pre.21"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-swipeable-container/-/iron-swipeable-container-3.0.0-pre.21.tgz#55fb13825742bc40575451950f6b939bd0efddb0"
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
 "@polymer/lit-element@^0.5.2":
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/@polymer/lit-element/-/lit-element-0.5.2.tgz#8d4e2d1ada27cf0f1a38b7b0eb9fadae92eb63df"
@@ -414,9 +420,31 @@ dom-storage@2.1.0:
 
 "dougpedia-firebase@https://gitlab.com/dougpedia/dougpedia-firebase.git":
   version "0.0.1"
-  resolved "https://gitlab.com/dougpedia/dougpedia-firebase.git#05068ff4b64cf152ca524e207d7977116bec88db"
+  resolved "https://gitlab.com/dougpedia/dougpedia-firebase.git#923a4ba44e630eb9d02224918d564ed0d95760cc"
   dependencies:
     firebase "^5.3.1"
+
+"dougpedia-joke-card@https://gitlab.com/dougpedia/dougpedia-joke-card.git":
+  version "0.0.1"
+  resolved "https://gitlab.com/dougpedia/dougpedia-joke-card.git#c145f5c4f26110d2f0b30fed83d6d3f0b03b549f"
+  dependencies:
+    "@material/mwc-icon" "^0.1.2"
+    "@polymer/lit-element" "^0.5.2"
+    "@polymer/polymer" "^3.0.0"
+    dougpedia-firebase "https://gitlab.com/dougpedia/dougpedia-firebase.git"
+
+"dougpedia-joke-list@https://gitlab.com/dougpedia/dougpedia-joke-list.git":
+  version "0.0.1"
+  resolved "https://gitlab.com/dougpedia/dougpedia-joke-list.git#34338c16414718740f8137f04b9c2d605dcfcee3"
+  dependencies:
+    "@polymer/iron-swipeable-container" "^3.0.0-pre.21"
+    "@polymer/lit-element" "^0.5.2"
+    "@polymer/polymer" "^3.0.0"
+    dougpedia-firebase "https://gitlab.com/dougpedia/dougpedia-firebase.git"
+    dougpedia-joke-card "https://gitlab.com/dougpedia/dougpedia-joke-card.git"
+    dougpedia-store "https://gitlab.com/dougpedia/dougpedia-store.git"
+    pwa-helpers "^0.8.3"
+    web-animations-js "https://github.com/mario-aleo/web-animations-js.git"
 
 "dougpedia-store@https://gitlab.com/dougpedia/dougpedia-store.git":
   version "0.0.1"
@@ -745,8 +773,8 @@ nan@^2.0.0:
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.10.0.tgz#96d0cd610ebd58d4b4de9cc0c6828cda99c7548f"
 
 needle@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/needle/-/needle-2.2.1.tgz#b5e325bd3aae8c2678902fa296f729455d1d3a7d"
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/needle/-/needle-2.2.2.tgz#1120ca4c41f2fcc6976fd28a8968afe239929418"
   dependencies:
     debug "^2.1.2"
     iconv-lite "^0.4.4"
@@ -1052,6 +1080,10 @@ wct-browser-legacy@^1.0.0:
     sinon "^1.17.1"
     sinon-chai "^2.10.0"
     stacky "^1.3.1"
+
+"web-animations-js@https://github.com/mario-aleo/web-animations-js.git":
+  version "2.3.1"
+  resolved "https://github.com/mario-aleo/web-animations-js.git#bb4746a2e4a2a0952d8ad11198ba2f84cd6dfe5b"
 
 websocket-driver@>=0.5.1:
   version "0.7.0"

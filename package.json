@@ -16,6 +16,7 @@
     "@polymer/lit-element": "^0.5.2",
     "@polymer/polymer": "^3.0.5",
     "dougpedia-firebase": "https://gitlab.com/dougpedia/dougpedia-firebase.git",
+    "dougpedia-joke-list": "https://gitlab.com/dougpedia/dougpedia-joke-list.git",
     "dougpedia-store": "https://gitlab.com/dougpedia/dougpedia-store.git",
     "pwa-helpers": "^0.8.3"
   },

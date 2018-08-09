@@ -3,6 +3,7 @@ import { connect, installOfflineWatcher } from 'pwa-helpers';
 import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings';
 import { signIn, signOut, observeAuthState } from 'dougpedia-firebase';
 import store from 'dougpedia-store/dougpedia-store';
+import 'dougpedia-joke-list';
 import '@material/mwc-fab';
 import '@material/mwc-icon';
 import '@material/mwc-button';
@@ -47,12 +48,12 @@ class DougpediaApp extends connect(store)(LitElement) {
             'appHeader'
             'appContent';
           min-height: 100vh;
-          background-image: linear-gradient(-210deg, #45D4FB 0%, #57E9F2 80%, #A3FDDD 100%)
-        }
-
-        mwc-icon {
-          color: #FFF;
-          user-select: none;
+          background-image: linear-gradient(
+            -210deg,
+            #45D4FB 0%,
+            #57E9F2 80%,
+            #A3FDDD 100%
+          );
         }
       </style>
 
@@ -79,6 +80,8 @@ class DougpediaApp extends connect(store)(LitElement) {
         #header mwc-icon {
           text-align: center;
           line-height: 64px;
+          color: #FFF;
+          user-select: none;
         }
 
         #sign-out {
@@ -100,16 +103,12 @@ class DougpediaApp extends connect(store)(LitElement) {
 
       <section id="header">
         <mwc-icon id="sign-out"
-          authorized?="${this._authorized}"
-          on-click="${this.signout}">
+          authorized?="${this._authorized}" on-click="${this.signout}">
           exit_to_app
         </mwc-icon>
 
         <mwc-icon id="network-status">
-          ${this._offline
-            ? html`cloud_off`
-            : html`cloud_queue`
-          }
+          ${this._offline ? html`cloud_off` : html`cloud_queue`}
         </mwc-icon>
       </section>
     `;
@@ -136,10 +135,8 @@ class DougpediaApp extends connect(store)(LitElement) {
         }
       </style>
 
-      <section id="login"
-        authorized?="${this._authorized}">
-        <mwc-button raised
-          on-click="${this.signin}">
+      <section id="login" authorized?="${this._authorized}">
+        <mwc-button raised on-click="${this.signin}">
           <span>Sign In</span>
         </mwc-button>
       </section>
@@ -173,15 +170,13 @@ class DougpediaApp extends connect(store)(LitElement) {
 
       </style>
 
-      <section id="content"
-        authorized?="${this._authorized}">
+      <section id="content" authorized?="${this._authorized}">
         <dougpedia-joke-list></dougpedia-joke-list>
 
         <!-- dougpedia-joke-upsert -->
 
         <mwc-fab id="add"
-          icon="add"
-          disabled?="${!this._authorized || this._offline}">
+          icon="add" disabled?="${!this._authorized || this._offline}">
         </mwc-fab>
       </section>
     `;
@@ -224,9 +219,7 @@ class DougpediaApp extends connect(store)(LitElement) {
           name: user.displayName,
         }
       });
-      this.shadowRoot
-        .querySelector('dougpedia-joke-list')
-        .loadJokeList();
+      this.shadowRoot.querySelector('dougpedia-joke-list').loadJokeList();
     } else {
       this._authorized = false;
       store.dispatch({ type: 'SIGNOUT' });
