@@ -1,13 +1,12 @@
 import { html, LitElement } from '@polymer/lit-element';
 import { connect, installOfflineWatcher } from 'pwa-helpers';
 import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings';
-import { signIn, signOut, loadJokeList, observeAuthState } from 'dougpedia-firebase';
+import { signIn, signOut, observeAuthState } from 'dougpedia-firebase';
 import store from 'dougpedia-store/dougpedia-store';
+import 'dougpedia-joke-list';
 import '@material/mwc-fab';
 import '@material/mwc-icon';
 import '@material/mwc-button';
-import 'dougpedia-joke-card';
-import '@polymer/iron-swipeable-container';
 
 /**
  * @customElement
@@ -17,7 +16,6 @@ class DougpediaApp extends connect(store)(LitElement) {
   static get properties() {
     return {
       _offline: Boolean,
-      _jokeList: Array,
       _authorized: Boolean,
       _activeJokeIndex: Number
     };
@@ -35,12 +33,6 @@ class DougpediaApp extends connect(store)(LitElement) {
     observeAuthState(
       this._onAuthChanged.bind(this)
     );
-
-    window.addEventListener(
-      "devicemotion",
-      this._onMotionChange.bind(this),
-      true
-    );
   }
 
   /* Render */
@@ -55,12 +47,12 @@ class DougpediaApp extends connect(store)(LitElement) {
             'appHeader'
             'appContent';
           min-height: 100vh;
-          background-image: linear-gradient(-210deg, #45D4FB 0%, #57E9F2 80%, #A3FDDD 100%)
-        }
-
-        mwc-icon {
-          color: #FFF;
-          user-select: none;
+          background-image: linear-gradient(
+            -210deg,
+            #45D4FB 0%,
+            #57E9F2 80%,
+            #A3FDDD 100%
+          );
         }
       </style>
 
@@ -87,6 +79,8 @@ class DougpediaApp extends connect(store)(LitElement) {
         #header mwc-icon {
           text-align: center;
           line-height: 64px;
+          color: #FFF;
+          user-select: none;
         }
 
         #sign-out {
@@ -108,16 +102,12 @@ class DougpediaApp extends connect(store)(LitElement) {
 
       <section id="header">
         <mwc-icon id="sign-out"
-          authorized?="${this._authorized}"
-          on-click="${this.signout}">
+          authorized?="${this._authorized}" on-click="${this.signout}">
           exit_to_app
         </mwc-icon>
 
         <mwc-icon id="network-status">
-          ${this._offline
-            ? html`cloud_off`
-            : html`cloud_queue`
-          }
+          ${this._offline ? html`cloud_off` : html`cloud_queue`}
         </mwc-icon>
       </section>
     `;
@@ -144,10 +134,8 @@ class DougpediaApp extends connect(store)(LitElement) {
         }
       </style>
 
-      <section id="login"
-        authorized?="${this._authorized}">
-        <mwc-button raised
-          on-click="${this.signin}">
+      <section id="login" authorized?="${this._authorized}">
+        <mwc-button raised on-click="${this.signin}">
           <span>Sign In</span>
         </mwc-button>
       </section>
@@ -179,26 +167,17 @@ class DougpediaApp extends connect(store)(LitElement) {
           visibility: hidden;
         }
 
-        dougpedia-joke-card {
-          margin: 32px 16px;
-        }
-        iron-swipeable-container {
-          overflow: hidden;
-        }
       </style>
 
-      <section id="content"
-        authorized?="${this._authorized}">
-        <iron-swipeable-container disabled?=${!this._jokeList[this._activeJoke]}
-          on-iron-swipe="${this._jokeDismissed.bind(this)}">
-          <dougpedia-joke-card></dougpedia-joke-card>
-        </iron-swipeable-container>
-      </section>
+      <section id="content" authorized?="${this._authorized}">
+        <dougpedia-joke-list></dougpedia-joke-list>
 
-      <mwc-fab id="add"
-        icon="add"
-        disabled?="${!this._authorized || this._offline}">
-      </mwc-fab>
+        <!-- dougpedia-joke-upsert -->
+
+        <mwc-fab id="add"
+          icon="add" disabled?="${!this._authorized || this._offline}">
+        </mwc-fab>
+      </section>
     `;
   }
   /* */
@@ -221,77 +200,10 @@ class DougpediaApp extends connect(store)(LitElement) {
   /* */
 
   /* Private */
-  _loadJokeList() {
-    loadJokeList()
-      .then(snapshot => {
-        store.dispatch({
-          type: 'UPDATE_JOKE_LIST',
-          data: {
-            jokeList: Object.keys(
-              snapshot.val()
-            )
-          }
-        });
-        this._activeJoke = 0;
-        this._setJokeCardKey();
-      });
-  }
-
-  _jokeDismissed(evt) {
-    if (evt.detail.direction == 'left') {
-      if (this._activeJoke == this._jokeList.length - 1)
-        this._activeJoke = 0;
-      else
-        this._activeJoke++;
-    } else {
-      if (this._activeJoke == 0)
-        this._activeJoke = this._jokeList.length - 1;
-      else
-        this._activeJoke--;
-    }
-    this._appendJokeCard(evt.detail.direction)
-      .then(
-        this._setJokeCardKey.bind(this)
-      );
-  }
-
-  _appendJokeCard(direction) {
-    return new Promise(resolve => {
-      const jokeCard = document.createElement('dougpedia-joke-card');
-      jokeCard.setAttribute('key', '');
-      Object.assign(jokeCard.style, {
-        transform: `
-          translateX(${direction == 'left' ? '100%': '-100%'})
-        `
-      });
-      this.shadowRoot.querySelector('iron-swipeable-container')
-        .appendChild(jokeCard);
-      requestAnimationFrame(() =>
-        requestAnimationFrame(() => {
-          Object.assign(jokeCard.style, {
-            transform: `translateX(0)`
-          });
-          jokeCard.addEventListener(
-            "transitionend",
-            () => setTimeout(resolve, 200),
-            false
-          );
-        })
-      );
-    });
-  }
-
-  _setJokeCardKey() {
-    this.shadowRoot
-      .querySelector('dougpedia-joke-card')
-      .setAttribute('key', this._jokeList[this._activeJoke]);
-  }
   /* */
 
   /* Observers */
-  _stateChanged(state) {
-    this._jokeList = state.state.jokeList;
-  }
+  _stateChanged(state) { }
 
   _onAuthChanged(user) {
     if (user) {
@@ -304,7 +216,7 @@ class DougpediaApp extends connect(store)(LitElement) {
           name: user.displayName,
         }
       });
-      this._loadJokeList();
+      this.shadowRoot.querySelector('dougpedia-joke-list').loadJokeList();
     } else {
       this._authorized = false;
       store.dispatch({ type: 'SIGNOUT' });
@@ -313,20 +225,6 @@ class DougpediaApp extends connect(store)(LitElement) {
 
   _onNetworkChanged(offline) {
     this._offline = offline;
-  }
-
-  _onMotionChange(evt) {
-    const {acceleration, rotationRate, interval} = evt;
-    if (Math.abs(acceleration.x) >= 30) {
-      store.dispatch({
-        type: 'UPDATE_JOKE_LIST',
-        data: {
-          jokeList: []
-        }
-      });
-      this._activeJoke = 0;
-      this._loadJokeList();
-    }
   }
   /* */
 }
