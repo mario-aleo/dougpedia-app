@@ -16,7 +16,6 @@ class DougpediaApp extends connect(store)(LitElement) {
   static get properties() {
     return {
       _offline: Boolean,
-      _jokeList: Array,
       _authorized: Boolean,
       _activeJokeIndex: Number
     };
@@ -204,9 +203,7 @@ class DougpediaApp extends connect(store)(LitElement) {
   /* */
 
   /* Observers */
-  _stateChanged(state) {
-    this._jokeList = state.state.jokeList;
-  }
+  _stateChanged(state) { }
 
   _onAuthChanged(user) {
     if (user) {
