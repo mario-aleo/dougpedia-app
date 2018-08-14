@@ -18,6 +18,7 @@
     "dougpedia-firebase": "https://gitlab.com/dougpedia/dougpedia-firebase.git",
     "dougpedia-joke-list": "https://gitlab.com/dougpedia/dougpedia-joke-list.git",
     "dougpedia-store": "https://gitlab.com/dougpedia/dougpedia-store.git",
+    "dougpedia-upsert": "https://gitlab.com/dougpedia/dougpedia-upsert.git",
     "pwa-helpers": "^0.8.3"
   },
   "devDependencies": {

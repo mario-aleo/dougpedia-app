@@ -3,6 +3,7 @@ import { connect, installOfflineWatcher } from 'pwa-helpers';
 import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings';
 import { signIn, signOut, observeAuthState } from 'dougpedia-firebase';
 import store from 'dougpedia-store/dougpedia-store';
+import 'dougpedia-upsert';
 import 'dougpedia-joke-list';
 import '@material/mwc-fab';
 import '@material/mwc-icon';
@@ -166,16 +167,16 @@ class DougpediaApp extends connect(store)(LitElement) {
           opacity: 0;
           visibility: hidden;
         }
-
       </style>
 
       <section id="content" authorized?="${this._authorized}">
         <dougpedia-joke-list></dougpedia-joke-list>
 
-        <!-- dougpedia-joke-upsert -->
+        <dougpedia-upsert></dougpedia-upsert>
 
         <mwc-fab id="add"
-          icon="add" disabled?="${!this._authorized || this._offline}">
+          icon="add" disabled?="${!this._authorized || this._offline}"
+          on-click="${this.addJoke.bind(this)}">
         </mwc-fab>
       </section>
     `;
@@ -183,6 +184,28 @@ class DougpediaApp extends connect(store)(LitElement) {
   /* */
 
   /* Lifecycle */
+  connectedCallback() {
+    super.connectedCallback();
+
+    const jokeList = this.shadowRoot.querySelector('dougpedia-joke-list');
+    this.shadowRoot.querySelector('dougpedia-upsert')
+      .addEventListener(
+        'upsert-ended',
+        jokeList.loadJokeList.bind(jokeList)
+      );
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    const jokeList = this.shadowRoot.querySelector('dougpedia-joke-list');
+    this.shadowRoot.querySelector('dougpedia-upsert')
+      .removeEventListener(
+        'upsert-ended',
+        jokeList.loadJokeList.bind(jokeList)
+      );
+  }
+  
   _firstRendered() {
     this.removeAttribute('unresolved');
   }
@@ -196,6 +219,10 @@ class DougpediaApp extends connect(store)(LitElement) {
 
   signout() {
     signOut();
+  }
+
+  addJoke() {
+    this.shadowRoot.querySelector('dougpedia-upsert').open();
   }
   /* */
 

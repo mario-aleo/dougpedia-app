@@ -210,10 +210,75 @@
   version "0.35.0"
   resolved "https://registry.yarnpkg.com/@material/typography/-/typography-0.35.0.tgz#23ad7eb7c9789e69c7c3fa54df8fc311cd7fc4b1"
 
+"@polymer/font-roboto@^3.0.0-pre.21":
+  version "3.0.0-pre.21"
+  resolved "https://registry.yarnpkg.com/@polymer/font-roboto/-/font-roboto-3.0.0-pre.21.tgz#65674464138a51f57cfdfd043e394d8fe75990b3"
+
+"@polymer/iron-a11y-announcer@^3.0.0-pre.21":
+  version "3.0.0-pre.21"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-a11y-announcer/-/iron-a11y-announcer-3.0.0-pre.21.tgz#717cfd1b34f281c2085ad6b45ecd724bd2ae6d84"
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-a11y-keys-behavior@^3.0.0-pre.21":
+  version "3.0.0-pre.21"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-a11y-keys-behavior/-/iron-a11y-keys-behavior-3.0.0-pre.21.tgz#4b79ebfea1fb59225c00a6d9b360df7ed2696c19"
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-autogrow-textarea@^3.0.0-pre.21":
+  version "3.0.0-pre.21"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-autogrow-textarea/-/iron-autogrow-textarea-3.0.0-pre.21.tgz#4091125483fb712f8ef3b3daf16039d9dd10ce77"
+  dependencies:
+    "@polymer/iron-behaviors" "^3.0.0-pre.21"
+    "@polymer/iron-flex-layout" "^3.0.0-pre.21"
+    "@polymer/iron-validatable-behavior" "^3.0.0-pre.21"
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-behaviors@^3.0.0-pre.21":
+  version "3.0.0-pre.21"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-behaviors/-/iron-behaviors-3.0.0-pre.21.tgz#47ea698ccf02842d4ac7a24dcdef06db8a8d9892"
+  dependencies:
+    "@polymer/iron-a11y-keys-behavior" "^3.0.0-pre.21"
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-flex-layout@^3.0.0-pre.21":
+  version "3.0.0-pre.21"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-flex-layout/-/iron-flex-layout-3.0.0-pre.21.tgz#064bccb85ec2091b66366970e8867d3de7bb273d"
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-form-element-behavior@^3.0.0-pre.21":
+  version "3.0.0-pre.21"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-form-element-behavior/-/iron-form-element-behavior-3.0.0-pre.21.tgz#47b2aa9e4c335f77264a370534e23fe6ec83457b"
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-input@^3.0.0-pre.21":
+  version "3.0.0-pre.21"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-input/-/iron-input-3.0.0-pre.21.tgz#181f823406e71134c6ed42dd19094d1cb194329a"
+  dependencies:
+    "@polymer/iron-a11y-announcer" "^3.0.0-pre.21"
+    "@polymer/iron-validatable-behavior" "^3.0.0-pre.21"
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-meta@^3.0.0-pre.21":
+  version "3.0.0-pre.21"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-meta/-/iron-meta-3.0.0-pre.21.tgz#e74ab386a1b490031e329f7ec032316bec24fa2a"
+  dependencies:
+    "@polymer/polymer" "^3.0.0"
+
 "@polymer/iron-swipeable-container@^3.0.0-pre.21":
   version "3.0.0-pre.21"
   resolved "https://registry.yarnpkg.com/@polymer/iron-swipeable-container/-/iron-swipeable-container-3.0.0-pre.21.tgz#55fb13825742bc40575451950f6b939bd0efddb0"
   dependencies:
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/iron-validatable-behavior@^3.0.0-pre.21":
+  version "3.0.0-pre.21"
+  resolved "https://registry.yarnpkg.com/@polymer/iron-validatable-behavior/-/iron-validatable-behavior-3.0.0-pre.21.tgz#3c26ed42c0221a1b34d3cfb39c4d1a3b68d67ffe"
+  dependencies:
+    "@polymer/iron-meta" "^3.0.0-pre.21"
     "@polymer/polymer" "^3.0.0"
 
 "@polymer/lit-element@^0.5.2":
@@ -222,6 +287,26 @@
   dependencies:
     "@polymer/polymer" "^3.0.2"
     lit-html "^0.10.0"
+
+"@polymer/paper-input@^3.0.0-pre.21":
+  version "3.0.0-pre.21"
+  resolved "https://registry.yarnpkg.com/@polymer/paper-input/-/paper-input-3.0.0-pre.21.tgz#637ccb08c53604bf8334f8c0b7f764e509afb424"
+  dependencies:
+    "@polymer/iron-a11y-keys-behavior" "^3.0.0-pre.21"
+    "@polymer/iron-autogrow-textarea" "^3.0.0-pre.21"
+    "@polymer/iron-behaviors" "^3.0.0-pre.21"
+    "@polymer/iron-form-element-behavior" "^3.0.0-pre.21"
+    "@polymer/iron-input" "^3.0.0-pre.21"
+    "@polymer/paper-styles" "^3.0.0-pre.21"
+    "@polymer/polymer" "^3.0.0"
+
+"@polymer/paper-styles@^3.0.0-pre.21":
+  version "3.0.0-pre.21"
+  resolved "https://registry.yarnpkg.com/@polymer/paper-styles/-/paper-styles-3.0.0-pre.21.tgz#9406bdb3c22c3d132086fae50079d0b5bf5c0541"
+  dependencies:
+    "@polymer/font-roboto" "^3.0.0-pre.21"
+    "@polymer/iron-flex-layout" "^3.0.0-pre.21"
+    "@polymer/polymer" "^3.0.0"
 
 "@polymer/polymer@^3.0.0", "@polymer/polymer@^3.0.2", "@polymer/polymer@^3.0.5":
   version "3.0.5"
@@ -426,7 +511,7 @@ dom-storage@2.1.0:
 
 "dougpedia-joke-card@https://gitlab.com/dougpedia/dougpedia-joke-card.git":
   version "0.0.1"
-  resolved "https://gitlab.com/dougpedia/dougpedia-joke-card.git#7763681a8a05c8b10a39c5894a73565f60d1e60a"
+  resolved "https://gitlab.com/dougpedia/dougpedia-joke-card.git#c10c6ef07578d7802851008227ff74b2aa947508"
   dependencies:
     "@material/mwc-icon" "^0.1.2"
     "@polymer/lit-element" "^0.5.2"
@@ -435,7 +520,7 @@ dom-storage@2.1.0:
 
 "dougpedia-joke-list@https://gitlab.com/dougpedia/dougpedia-joke-list.git":
   version "0.0.1"
-  resolved "https://gitlab.com/dougpedia/dougpedia-joke-list.git#34338c16414718740f8137f04b9c2d605dcfcee3"
+  resolved "https://gitlab.com/dougpedia/dougpedia-joke-list.git#ca9f245b914e93f5cc772813ebf88bfd3fc0fc01"
   dependencies:
     "@polymer/iron-swipeable-container" "^3.0.0-pre.21"
     "@polymer/lit-element" "^0.5.2"
@@ -451,6 +536,19 @@ dom-storage@2.1.0:
   resolved "https://gitlab.com/dougpedia/dougpedia-store.git#6186f40a5945323b968adf56a16fdf775a79418b"
   dependencies:
     redux "^4.0.0"
+
+"dougpedia-upsert@https://gitlab.com/dougpedia/dougpedia-upsert.git":
+  version "0.0.1"
+  resolved "https://gitlab.com/dougpedia/dougpedia-upsert.git#3005e5d6ba827b16da557b041f9734f1a888f375"
+  dependencies:
+    "@material/mwc-button" "^0.1.2"
+    "@polymer/lit-element" "^0.5.2"
+    "@polymer/paper-input" "^3.0.0-pre.21"
+    "@polymer/polymer" "^3.0.0"
+    dougpedia-firebase "https://gitlab.com/dougpedia/dougpedia-firebase.git"
+    dougpedia-store "https://gitlab.com/dougpedia/dougpedia-store.git"
+    pwa-helpers "^0.8.3"
+    web-animations-js "https://github.com/mario-aleo/web-animations-js.git"
 
 encoding@^0.1.11:
   version "0.1.12"
