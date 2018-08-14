@@ -420,13 +420,13 @@ dom-storage@2.1.0:
 
 "dougpedia-firebase@https://gitlab.com/dougpedia/dougpedia-firebase.git":
   version "0.0.1"
-  resolved "https://gitlab.com/dougpedia/dougpedia-firebase.git#923a4ba44e630eb9d02224918d564ed0d95760cc"
+  resolved "https://gitlab.com/dougpedia/dougpedia-firebase.git#a94ab96c2560c0ceb115db702c506e8aef8a0732"
   dependencies:
     firebase "^5.3.1"
 
 "dougpedia-joke-card@https://gitlab.com/dougpedia/dougpedia-joke-card.git":
   version "0.0.1"
-  resolved "https://gitlab.com/dougpedia/dougpedia-joke-card.git#c145f5c4f26110d2f0b30fed83d6d3f0b03b549f"
+  resolved "https://gitlab.com/dougpedia/dougpedia-joke-card.git#7763681a8a05c8b10a39c5894a73565f60d1e60a"
   dependencies:
     "@material/mwc-icon" "^0.1.2"
     "@polymer/lit-element" "^0.5.2"
@@ -729,8 +729,8 @@ minimist@^1.2.0:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
 
 minipass@^2.2.1, minipass@^2.3.3:
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/minipass/-/minipass-2.3.3.tgz#a7dcc8b7b833f5d368759cce544dccb55f50f233"
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/minipass/-/minipass-2.3.4.tgz#4768d7605ed6194d6d576169b9e12ef71e9d9957"
   dependencies:
     safe-buffer "^5.1.2"
     yallist "^3.0.0"
@@ -810,8 +810,8 @@ nopt@^4.0.1:
     osenv "^0.1.4"
 
 npm-bundled@^1.0.1:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/npm-bundled/-/npm-bundled-1.0.3.tgz#7e71703d973af3370a9591bafe3a63aca0be2308"
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/npm-bundled/-/npm-bundled-1.0.5.tgz#3c1732b7ba936b3a10325aef616467c0ccbcc979"
 
 npm-packlist@^1.1.6:
   version "1.1.11"
