@@ -25,6 +25,8 @@ class DougpediaApp extends connect(store)(LitElement) {
   constructor() {
     super();
 
+    this._infoCardAnimation = null;
+
     setPassiveTouchGestures(true);
 
     installOfflineWatcher(
@@ -156,6 +158,14 @@ class DougpediaApp extends connect(store)(LitElement) {
           visibility: hidden;
         }
 
+        #info {
+          --mdc-theme-secondary: #fff;
+          --mdc-theme-on-secondary: #0085d7;
+          position: fixed;
+          bottom: 24px;
+          left: 24px;
+        }
+
         #add {
           position: fixed;
           bottom: 16px;
@@ -174,10 +184,46 @@ class DougpediaApp extends connect(store)(LitElement) {
 
         <dougpedia-upsert></dougpedia-upsert>
 
+        <mwc-fab id="info"
+          mini
+          icon="error_outline"
+          on-click="${this._showInfo.bind(this)}">
+        </mwc-fab>
+
         <mwc-fab id="add"
           icon="add" disabled?="${!this._authorized || this._offline}"
           on-click="${this.addJoke.bind(this)}">
         </mwc-fab>
+
+        ${this._infoFragment()}
+      </section>
+    `;
+  }
+
+  _infoFragment() {
+    return html`
+      <style>
+        #info-card {
+          position: fixed;
+          bottom: 16px;
+          left: 16px;
+          padding: 16px;
+          border-radius: 2px;
+          background-color: #fff;
+          box-shadow:
+            0 2px 2px 0 rgba(0, 0, 0, 0.14),
+            0 1px 5px 0 rgba(0, 0, 0, 0.12),
+            0 3px 1px -2px rgba(0, 0, 0, 0.2);
+          will-change: width, height, opacity, visibility, border-radius;
+        }
+      </style>
+
+      <section id="info-card">
+        <span>This application is under development.</span>
+        <br>
+        <span>For now, you can only read and add jokes.</span>
+        <br>
+        <span>Also you can side-shake your mobile to refresh the joke list.</span>
       </section>
     `;
   }
@@ -205,8 +251,30 @@ class DougpediaApp extends connect(store)(LitElement) {
         jokeList.loadJokeList.bind(jokeList)
       );
   }
-  
+
   _firstRendered() {
+    const infoCard = this.shadowRoot.querySelector('#info-card');
+    this._infoCardAnimation = infoCard.animate(
+      [
+        {
+          visibility: 'hidden',
+          opacity: 0,
+          width: 0,
+          height: 0,
+          borderRadius: '100%'
+        },
+        {
+          visibility: 'visible',
+          opacity: 1,
+          width: '150px',
+          height: '150px',
+          borderRadius: '2px'
+        }
+      ],
+      { fill: 'both', duration: 250, easing: 'ease' }
+    );
+    this._infoCardAnimation.pause();
+
     this.removeAttribute('unresolved');
   }
   /* */
@@ -227,6 +295,23 @@ class DougpediaApp extends connect(store)(LitElement) {
   /* */
 
   /* Private */
+  _showInfo() {
+    this._hideInfoEvent = this._hideInfo.bind(this);
+    this._infoCardAnimation.onfinish = () => (
+      window.addEventListener('click', this._hideInfoEvent)
+    );
+    this._infoCardAnimation.playbackRate = 1;
+    this._infoCardAnimation.play();
+    
+  }
+
+  _hideInfo() {
+    this._infoCardAnimation.onfinish = () => (
+      window.removeEventListener('click', this._hideInfoEvent)
+    );
+    this._infoCardAnimation.playbackRate = -1;
+    this._infoCardAnimation.play();
+  }
   /* */
 
   /* Observers */
