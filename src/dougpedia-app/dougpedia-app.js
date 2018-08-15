@@ -207,6 +207,7 @@ class DougpediaApp extends connect(store)(LitElement) {
           position: fixed;
           bottom: 16px;
           left: 16px;
+          overflow: hidden;
           padding: 16px;
           border-radius: 2px;
           background-color: #fff;
@@ -302,7 +303,7 @@ class DougpediaApp extends connect(store)(LitElement) {
     );
     this._infoCardAnimation.playbackRate = 1;
     this._infoCardAnimation.play();
-    
+
   }
 
   _hideInfo() {
